@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Search, Sparkles, AlertCircle, Loader2, ArrowRight, HeartPulse } from 'lucide-react';
-import { checkSymptoms } from '../services/geminiService';
+import { apiService } from '../services/apiService';
 import { SymptomResult } from '../types';
 
 const SymptomChecker: React.FC = () => {
@@ -13,9 +13,19 @@ const SymptomChecker: React.FC = () => {
     e.preventDefault();
     if (!query.trim()) return;
     setLoading(true);
-    const res = await checkSymptoms(query);
-    setResult(res);
-    setLoading(false);
+    try {
+      const res = await apiService.checkSymptoms(query);
+      setResult({
+        potentialAilment: res.potentialAilment,
+        description: res.description,
+        recommendations: res.recommendations,
+        disclaimer: res.disclaimer
+      });
+    } catch (error) {
+      console.error('Failed to check symptoms:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -24,19 +34,19 @@ const SymptomChecker: React.FC = () => {
         <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
           <Sparkles size={80} />
         </div>
-        
+
         <form onSubmit={handleSearch} className="flex flex-col md:flex-row items-stretch md:items-center gap-2">
           <div className="flex-1 relative flex items-center group">
             <Search className="absolute left-6 text-gray-300 group-focus-within:text-emerald-500 transition-colors" size={24} />
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search symptoms like 'headache', 'digestion', 'joint pain'..."
               className="w-full pl-16 pr-8 py-6 rounded-2xl md:rounded-l-2xl md:rounded-r-none border-none bg-gray-50/50 focus:ring-0 text-lg"
             />
           </div>
-          <button 
+          <button
             type="submit"
             disabled={loading}
             className="bg-[#064E3B] text-white px-10 py-6 rounded-2xl md:rounded-l-none md:rounded-r-2xl font-bold flex items-center justify-center gap-3 hover:bg-emerald-800 transition-all disabled:opacity-70"
@@ -49,7 +59,7 @@ const SymptomChecker: React.FC = () => {
         <div className="px-6 py-4 flex items-center gap-6 overflow-x-auto no-scrollbar">
           <span className="text-xs font-bold text-gray-400 uppercase tracking-widest flex-shrink-0">Popular:</span>
           {['Headache', 'Digestive Issues', 'Joint Pain', 'Skin Problems', 'Stress'].map(tag => (
-            <button 
+            <button
               key={tag}
               onClick={() => { setQuery(tag); }}
               className="text-sm font-medium text-gray-500 hover:text-emerald-700 whitespace-nowrap"
@@ -72,7 +82,7 @@ const SymptomChecker: React.FC = () => {
                 <p className="text-emerald-800/70 font-medium">Ayurvedic Insight</p>
               </div>
             </div>
-            
+
             <p className="text-gray-700 leading-relaxed mb-8 text-lg">
               {result.description}
             </p>

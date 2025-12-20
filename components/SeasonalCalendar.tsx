@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { Leaf, Sun, CloudRain, Wind, Snowflake, CheckCircle2, ArrowRight, Utensils, Zap, Sprout } from 'lucide-react';
+import { apiService } from '../services/apiService';
+import { Nutrition as NutritionModel } from '../models';
+import { Leaf, Sun, CloudRain, Wind, Snowflake, CheckCircle2, ArrowRight, Utensils, Zap, Sprout, Calendar as CalendarIcon } from 'lucide-react';
 
 interface SeasonData {
   id: string;
@@ -16,85 +18,88 @@ interface SeasonData {
   herbs: string[];
 }
 
-const seasons: SeasonData[] = [
-  {
-    id: 'spring',
-    name: 'Spring',
-    sanskritName: 'Vasanta',
-    months: 'March - May',
-    description: 'A time of renewal and detoxification. As the earth warms, the Kapha accumulated in winter begins to liquefy.',
-    color: 'emerald',
-    icon: <Sprout size={24} />,
-    image: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=800',
-    diet: ['Favor bitter, pungent, and astringent tastes', 'Eat light, warm, and easy-to-digest foods', 'Reduce heavy, oily, and sweet items', 'Incorporate honey, ginger, and black pepper'],
-    lifestyle: ['Wake up earlier with the sunrise', 'Increase physical activity/vigorous exercise', 'Practice Dry Massage (Udvartana)', 'Use Neti pot for nasal cleansing'],
-    herbs: ['Trikatu (Ginger, Black Pepper, Pippali)', 'Triphala for detoxification', 'Turmeric for immunity', 'Tulsi for respiratory health']
-  },
-  {
-    id: 'summer',
-    name: 'Summer',
-    sanskritName: 'Grishma',
-    months: 'June - August',
-    description: 'The peak of heat where Pitta can easily become aggravated. Focus on staying cool, hydrated, and calm.',
-    color: 'amber',
-    icon: <Sun size={24} />,
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800',
-    diet: ['Favor sweet, bitter, and astringent tastes', 'Stay hydrated with coconut water and mint lime', 'Eat cooling fruits like watermelon and grapes', 'Avoid spicy, salty, and sour foods'],
-    lifestyle: ['Avoid strenuous exercise during peak heat', 'Wear light, breathable cotton clothing', 'Apply sandalwood paste or rose water', 'Walk in the moonlight or near water'],
-    herbs: ['Shatavari for cooling', 'Amla (Indian Gooseberry)', 'Fennel seeds for digestion', 'Brahmi for mental clarity']
-  },
-  {
-    id: 'monsoon',
-    name: 'Monsoon',
-    sanskritName: 'Varsha',
-    months: 'August - September',
-    description: 'High humidity and dampness can weaken digestion (Agni) and aggravate Vata. Keeping warm and dry is key.',
-    color: 'blue',
-    icon: <CloudRain size={24} />,
-    image: 'https://images.unsplash.com/photo-1433838552652-f9a46b332c40?auto=format&fit=crop&q=80&w=800',
-    diet: ['Favor sour and salty tastes to balance Vata', 'Drink warm, boiled water', 'Use ghee in cooking for Agni support', 'Avoid raw vegetables and cold salads'],
-    lifestyle: ['Keep the body dry and warm', 'Avoid daytime napping', 'Fumigate the living space with neem or resins', 'Practice grounding yoga asanas'],
-    herbs: ['Ginger for digestive fire', 'Ashwagandha for strength', 'Guduchi for immunity', 'Haritaki for gut health']
-  },
-  {
-    id: 'autumn',
-    name: 'Autumn',
-    sanskritName: 'Sharad',
-    months: 'October - November',
-    description: 'A transition period where Pitta accumulated in monsoon can manifest. Focus on gentle purgation and cooling.',
-    color: 'orange',
-    icon: <Wind size={24} />,
-    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800',
-    diet: ['Favor sweet and bitter tastes', 'Eat rice, wheat, and mung beans', 'Include cooling dairy like milk and ghee', 'Reduce onion, garlic, and alcohol'],
-    lifestyle: ['Moderate exercise is recommended', 'Avoid direct sun exposure', 'Practice meditation and moon-gazing', 'Get adequate, restful sleep'],
-    herbs: ['Neem for blood purification', 'Manjistha for skin health', 'Aloe Vera juice', 'Licorice (Yashtimadhu)']
-  },
-  {
-    id: 'winter',
-    name: 'Winter',
-    sanskritName: 'Hemanta',
-    months: 'December - February',
-    description: 'The body’s digestive fire is strongest. Vata is naturally high but can be balanced with nourishment.',
-    color: 'indigo',
-    icon: <Snowflake size={24} />,
-    image: 'https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?auto=format&fit=crop&q=80&w=800',
-    diet: ['Favor sweet, sour, and salty tastes', 'Eat hot, nourishing, and oily foods', 'Consume root vegetables and grains', 'Warm milk with spices at bedtime'],
-    lifestyle: ['Daily oil massage (Abhyanga) is essential', 'Stay active and warm', 'Sunbathe during the daytime', 'Practice heating pranayamas (Surya Bhedana)'],
-    herbs: ['Chyawanprash for vitality', 'Ashwagandha for grounding', 'Bala for muscle strength', 'Turmeric and Cinnamon']
-  }
-];
 
 const SeasonalCalendar: React.FC = () => {
-  const [activeSeason, setActiveSeason] = useState<SeasonData>(seasons[0]);
+  const [seasons, setSeasons] = useState<SeasonData[]>([]);
+  const [activeSeason, setActiveSeason] = useState<SeasonData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const month = new Date().getMonth();
-    if (month >= 2 && month <= 4) setActiveSeason(seasons[0]); // Spring
-    else if (month >= 5 && month <= 7) setActiveSeason(seasons[1]); // Summer
-    else if (month >= 8 && month <= 8) setActiveSeason(seasons[2]); // Monsoon
-    else if (month >= 9 && month <= 10) setActiveSeason(seasons[3]); // Autumn
-    else setActiveSeason(seasons[4]); // Winter
+    const fetchGuidance = async () => {
+      try {
+        const seasonalData = await apiService.getSeasonalGuidance();
+        
+        if (seasonalData && seasonalData.length > 0) {
+          const mappedSeasons: SeasonData[] = seasonalData.map((s: NutritionModel, idx: number) => {
+            // Determine icon and color based on season name
+            let icon = <Leaf size={24} />;
+            let color = 'emerald';
+            let image = s.image || 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&q=80&w=800';
+
+            const name = s.name.toLowerCase();
+            if (name.includes('spring')) {
+              icon = <Sprout size={24} />;
+              color = 'emerald';
+            } else if (name.includes('summer')) {
+              icon = <Sun size={24} />;
+              color = 'amber';
+            } else if (name.includes('monsoon') || name.includes('rain')) {
+              icon = <CloudRain size={24} />;
+              color = 'blue';
+            } else if (name.includes('autumn') || name.includes('fall')) {
+              icon = <Wind size={24} />;
+              color = 'orange';
+            } else if (name.includes('winter')) {
+              icon = <Snowflake size={24} />;
+              color = 'indigo';
+            }
+
+            return {
+              id: s._id || `season-${idx}`,
+              name: s.name,
+              sanskritName: s.name.split('(')[1]?.replace(')', '') || s.name,
+              months: s.months,
+              description: s.desc,
+              color: color,
+              icon: icon,
+              image: image,
+              diet: s.recs,
+              lifestyle: s.reduce,
+              herbs: [] // API doesn't seem to provide herbs yet
+            };
+          });
+
+          setSeasons(mappedSeasons);
+
+          const month = new Date().getMonth();
+          let currentSeason: SeasonData | undefined;
+          
+          // Try to find current season based on month mapping
+          if (month >= 2 && month <= 4) currentSeason = mappedSeasons.find(s => s.name.toLowerCase().includes('spring'));
+          else if (month >= 5 && month <= 7) currentSeason = mappedSeasons.find(s => s.name.toLowerCase().includes('summer'));
+          else if (month >= 8 && month <= 8) currentSeason = mappedSeasons.find(s => s.name.toLowerCase().includes('monsoon'));
+          else if (month >= 9 && month <= 10) currentSeason = mappedSeasons.find(s => s.name.toLowerCase().includes('autumn'));
+          else currentSeason = mappedSeasons.find(s => s.name.toLowerCase().includes('winter'));
+
+          setActiveSeason(currentSeason || mappedSeasons[0]);
+        }
+      } catch (error) {
+        console.error('Failed to fetch seasonal guidance:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGuidance();
   }, []);
+
+  if (loading || !activeSeason) {
+    return (
+      <section className="py-24 bg-[#F5F3EF] flex items-center justify-center min-h-[400px]">
+        <div className="text-emerald-800 font-serif text-2xl animate-pulse">Loading Seasonal Wisdom...</div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-24 bg-[#F5F3EF]">
@@ -111,30 +116,29 @@ const SeasonalCalendar: React.FC = () => {
             </p>
           </div>
           <div className="flex items-center gap-2 bg-white p-2 rounded-2xl border border-gray-100 shadow-sm">
-             {seasons.map((s) => (
-               <button
-                 key={s.id}
-                 onClick={() => setActiveSeason(s)}
-                 className={`p-3 rounded-xl transition-all flex flex-col items-center gap-1 group ${
-                   activeSeason.id === s.id 
-                   ? 'bg-[#064E3B] text-white shadow-md' 
-                   : 'text-gray-400 hover:bg-gray-50'
-                 }`}
-               >
-                 {s.icon}
-                 <span className={`text-[10px] font-bold uppercase tracking-tighter ${activeSeason.id === s.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
-                   {s.name}
-                 </span>
-               </button>
-             ))}
+            {seasons.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => setActiveSeason(s)}
+                className={`p-3 rounded-xl transition-all flex flex-col items-center gap-1 group ${activeSeason?.id === s.id
+                  ? 'bg-[#064E3B] text-white shadow-md'
+                  : 'text-gray-400 hover:bg-gray-50'
+                  }`}
+              >
+                {s.icon}
+                <span className={`text-[10px] font-bold uppercase tracking-tighter ${activeSeason.id === s.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                  {s.name}
+                </span>
+              </button>
+            ))}
           </div>
         </div>
 
         <div className="bg-white rounded-[40px] overflow-hidden shadow-2xl shadow-emerald-900/5 flex flex-col lg:flex-row">
           <div className="lg:w-2/5 relative min-h-[400px]">
-            <img 
-              src={activeSeason.image} 
-              alt={activeSeason.name} 
+            <img
+              src={activeSeason.image}
+              alt={activeSeason.name}
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -159,20 +163,20 @@ const SeasonalCalendar: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <RecommendationGroup 
-                icon={<Utensils className="text-orange-500" />} 
-                title="Ahara (Diet)" 
-                items={activeSeason.diet} 
+              <RecommendationGroup
+                icon={<Utensils className="text-orange-500" />}
+                title="Ahara (Diet)"
+                items={activeSeason.diet}
               />
-              <RecommendationGroup 
-                icon={<Zap className="text-blue-500" />} 
-                title="Vihara (Lifestyle)" 
-                items={activeSeason.lifestyle} 
+              <RecommendationGroup
+                icon={<Zap className="text-blue-500" />}
+                title="Vihara (Lifestyle)"
+                items={activeSeason.lifestyle}
               />
-              <RecommendationGroup 
-                icon={<Leaf className="text-emerald-500" />} 
-                title="Aushadhi (Herbs)" 
-                items={activeSeason.herbs} 
+              <RecommendationGroup
+                icon={<Leaf className="text-emerald-500" />}
+                title="Aushadhi (Herbs)"
+                items={activeSeason.herbs}
               />
               <div className="bg-emerald-50 p-8 rounded-3xl border border-emerald-100 flex flex-col justify-center">
                 <h5 className="font-bold text-emerald-900 mb-4">Need a Personalized Plan?</h5>

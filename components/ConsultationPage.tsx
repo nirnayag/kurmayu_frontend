@@ -1,19 +1,19 @@
 
 import React, { useState } from 'react';
-import { 
-  Video, 
-  MapPin, 
-  Clock, 
-  Phone, 
-  Calendar, 
-  Star, 
-  Award, 
-  CheckCircle2, 
-  ChevronDown, 
-  ChevronRight, 
-  ShieldCheck, 
-  Monitor, 
-  Activity, 
+import {
+  Video,
+  MapPin,
+  Clock,
+  Phone,
+  Calendar,
+  Star,
+  Award,
+  CheckCircle2,
+  ChevronDown,
+  ChevronRight,
+  ShieldCheck,
+  Monitor,
+  Activity,
   Languages,
   ArrowRight,
   Stethoscope,
@@ -26,12 +26,12 @@ const ConsultationPage: React.FC = () => {
 
   const handleBookVideo = async () => {
     // Check for API key selection for premium video features as per instructions
-    if (typeof window.aistudio !== 'undefined') {
-      const hasKey = await window.aistudio.hasSelectedApiKey();
+    if (typeof (window as any).aistudio !== 'undefined') {
+      const hasKey = await (window as any).aistudio.hasSelectedApiKey();
       if (!hasKey) {
-        await window.aistudio.openSelectKey();
-        // Proceeding assuming success as per race condition instructions
+        await (window as any).aistudio.openSelectKey();
       }
+      // Proceeding assuming success as per race condition instructions
     }
     alert("Booking Video Consultation... You will now be redirected to the payment gateway.");
   };
@@ -137,9 +137,9 @@ const ConsultationPage: React.FC = () => {
           <div className="flex flex-col lg:flex-row gap-12">
             <div className="lg:w-1/4">
               <div className="relative group">
-                <img 
-                  src="https://i.pravatar.cc/400?img=60" 
-                  alt="Dr. Ravi Shinde" 
+                <img
+                  src="https://i.pravatar.cc/400?img=60"
+                  alt="Dr. Ravi Shinde"
                   className="w-full aspect-square object-cover rounded-3xl border-4 border-emerald-50"
                 />
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-4 py-2 rounded-full shadow-lg border border-emerald-50 flex items-center gap-1">
@@ -237,7 +237,7 @@ const ConsultationPage: React.FC = () => {
               <div className="flex items-center gap-4 text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">
                 <span className="flex items-center gap-1"><Clock size={14} /> {type.duration}</span>
               </div>
-              
+
               <div className="space-y-3 mb-8 flex-1">
                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Includes:</p>
                 {type.includes.map((inc, j) => (
@@ -252,7 +252,7 @@ const ConsultationPage: React.FC = () => {
                 <div className="flex items-center gap-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
                   <Calendar size={14} /> {type.availability}
                 </div>
-                <button 
+                <button
                   onClick={type.onBook || (() => alert("Feature coming soon!"))}
                   className="w-full bg-[#064E3B] text-white py-4 rounded-xl font-bold hover:bg-emerald-900 transition-colors"
                 >
@@ -298,7 +298,7 @@ const ConsultationPage: React.FC = () => {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-16 text-center">
             <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-6 py-3 rounded-full font-bold text-sm border border-emerald-100">
               <CheckCircle2 size={18} /> 10,000+ Successful Treatments
@@ -347,7 +347,7 @@ const ConsultationPage: React.FC = () => {
               { q: "Is follow-up support available?", a: "Absolutely! You can book follow-up consultations at a discounted rate. Dr. Shinde also provides email support for minor queries between consultations." }
             ].map((faq, i) => (
               <div key={i} className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-                <button 
+                <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full p-6 text-left flex justify-between items-center group"
                 >
