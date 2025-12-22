@@ -9,7 +9,8 @@ import {
     FamilyRecipe,
     FeaturedFood,
     Comparison,
-    SymptomCheckResponse
+    SymptomCheckResponse,
+    MediaRecognition
 } from '../models';
 
 const API_BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:5000/api';
@@ -75,4 +76,7 @@ export const apiService = {
 
     // Comparisons
     getComparisons: () => fetch(`${API_BASE_URL}/compare`).then(res => handleListResponse(res, Comparison.fromJson)),
+
+    // Media Recognitions
+    getMediaRecognitions: () => fetch(`${API_BASE_URL}/media-recognitions`).then(res => handleListResponse(res, MediaRecognition.fromJson)),
 };

@@ -1,15 +1,15 @@
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Leaf, 
-  Search, 
-  ArrowRight, 
-  Calendar, 
-  Users, 
-  Star, 
-  CheckCircle2, 
-  BookOpen, 
-  UserRound, 
+import {
+  Leaf,
+  Search,
+  ArrowRight,
+  Calendar,
+  Users,
+  Star,
+  CheckCircle2,
+  BookOpen,
+  UserRound,
   Stethoscope,
   ChevronRight,
   Phone,
@@ -24,6 +24,8 @@ import {
   Play
 } from 'lucide-react';
 import { checkSymptoms } from './services/geminiService';
+import { apiService } from './services/apiService';
+import { MediaRecognition } from './models';
 import { SymptomResult, Dosha } from './types';
 
 // Components - Ensuring all use relative paths
@@ -47,7 +49,8 @@ type ViewState = 'home' | 'ailment-guide' | 'dosha-assessment' | 'treatment-cent
 
 const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('home');
-  const [selectedMedia, setSelectedMedia] = useState<any | null>(null);
+  const [selectedMedia, setSelectedMedia] = useState<MediaRecognition | null>(null);
+  const [mediaRecognitions, setMediaRecognitions] = useState<MediaRecognition[]>([]);
 
   // Handle navigation from hash
   useEffect(() => {
@@ -77,6 +80,18 @@ const App: React.FC = () => {
     return () => window.removeEventListener('hashchange', handleHash);
   }, []);
 
+  useEffect(() => {
+    const fetchMedia = async () => {
+      try {
+        const data = await apiService.getMediaRecognitions();
+        setMediaRecognitions(data);
+      } catch (error) {
+        console.error('Error fetching media recognitions:', error);
+      }
+    };
+    fetchMedia();
+  }, []);
+
   const navigateToBook = () => {
     setView('consultation');
     window.location.hash = '#book';
@@ -100,7 +115,7 @@ const App: React.FC = () => {
         return (
           <main>
             <Hero />
-            
+
             {/* Entry Points Section */}
             <section className="py-20 px-4 md:px-8 max-w-7xl mx-auto">
               <div className="text-center mb-16">
@@ -109,32 +124,32 @@ const App: React.FC = () => {
                   Access powerful tools to understand your body and find natural healing solutions.
                 </p>
               </div>
-              
+
               <SymptomChecker />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
-                <FeatureCard 
+                <FeatureCard
                   icon={<Search className="w-6 h-6 text-blue-500" />}
                   title="Dosha Assessment"
                   description="Discover your unique constitution in 10 minutes"
                   link="#dosha"
                   color="bg-blue-50"
                 />
-                <FeatureCard 
+                <FeatureCard
                   icon={<Leaf className="w-6 h-6 text-emerald-500" />}
                   title="Treatment Finder"
                   description="Find Ayurvedic solutions for your health concerns"
                   link="#ailment"
                   color="bg-emerald-50"
                 />
-                <FeatureCard 
+                <FeatureCard
                   icon={<BookOpen className="w-6 h-6 text-amber-500" />}
                   title="Nutrition Guide"
                   description="Personalized dietary recommendations"
                   link="#nutrition"
                   color="bg-amber-50"
                 />
-                <FeatureCard 
+                <FeatureCard
                   icon={<Calendar className="w-6 h-6 text-rose-500" />}
                   title="Book Consultation"
                   description="Connect with Dr. Ravi Shinde"
@@ -162,13 +177,13 @@ const App: React.FC = () => {
                     <div>
                       <h2 className="text-4xl font-serif mb-6">Experience the Healing Power of Ayurveda</h2>
                       <p className="text-gray-600 leading-relaxed mb-8">
-                        Our approach combines ancient wisdom with modern precision, ensuring you receive 
+                        Our approach combines ancient wisdom with modern precision, ensuring you receive
                         a plan that honors your body's unique intelligence.
                       </p>
                     </div>
 
                     <div className="space-y-8">
-                      <RecommendationItem 
+                      <RecommendationItem
                         title="Lifestyle Recommendations"
                         items={[
                           "Practice oil massage (Abhyanga) with sesame oil before bathing",
@@ -177,7 +192,7 @@ const App: React.FC = () => {
                           "Practice gentle yoga and pranayama for circulation"
                         ]}
                       />
-                      <RecommendationItem 
+                      <RecommendationItem
                         title="Herbs Recommendations"
                         items={[
                           "Ashwagandha for strength and immunity",
@@ -189,7 +204,7 @@ const App: React.FC = () => {
                     </div>
 
                     <div className="pt-6 border-t border-gray-200">
-                      <button 
+                      <button
                         onClick={navigateToBook}
                         className="bg-[#064E3B] text-white px-8 py-3 rounded-full hover:bg-emerald-800 transition-colors flex items-center gap-2"
                       >
@@ -211,45 +226,16 @@ const App: React.FC = () => {
                 <h3 className="uppercase tracking-widest text-sm">Media Recognition</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <MediaCard 
-                  source="Times of India"
-                  title="Leading Ayurvedic Expert in Maharashtra"
-                  date="March 2024"
-                  image="https://images.unsplash.com/photo-1585241936939-be4099591252?auto=format&fit=crop&q=80&w=600"
-                  onView={() => setSelectedMedia({
-                    source: "Times of India",
-                    title: "Leading Ayurvedic Expert in Maharashtra",
-                    date: "March 2024",
-                    image: "https://images.unsplash.com/photo-1585241936939-be4099591252?auto=format&fit=crop&q=80&w=600",
-                    content: "In a recent profile, Dr. Ravi Shinde was recognized for his outstanding contribution to the field of Ayurveda, specifically for his work in integrating ancient Panchakarma techniques with modern wellness standards. The article highlights his success in treating chronic lifestyle disorders."
-                  })}
-                />
-                <MediaCard 
-                  source="Lokmat"
-                  title="Traditional Medicine Meets Modern Science"
-                  date="January 2024"
-                  image="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=600"
-                  onView={() => setSelectedMedia({
-                    source: "Lokmat",
-                    title: "Traditional Medicine Meets Modern Science",
-                    date: "January 2024",
-                    image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=600",
-                    content: "This feature explores how Kurmayu Ayurveda uses standardized herbal extracts and evidence-based protocols to validate the efficacy of traditional treatments. Dr. Shinde explains the importance of Prakriti analysis in modern healthcare."
-                  })}
-                />
-                <MediaCard 
-                  source="Maharashtra Times"
-                  title="Panchakarma Success Stories"
-                  date="November 2023"
-                  image="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600"
-                  onView={() => setSelectedMedia({
-                    source: "Maharashtra Times",
-                    title: "Panchakarma Success Stories",
-                    date: "November 2023",
-                    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=600",
-                    content: "A collection of inspiring case studies showcasing the transformative power of the five-fold detoxification process at Kurmayu. The stories highlight recovery from metabolic and joint disorders through authentic Ayurvedic care."
-                  })}
-                />
+                {mediaRecognitions.map((media, index) => (
+                  <MediaCard
+                    key={media._id || index}
+                    source={media.source}
+                    title={media.title}
+                    date={media.publishedDate}
+                    image={media.thumbnail}
+                    onView={() => setSelectedMedia(media)}
+                  />
+                ))}
               </div>
             </section>
 
@@ -264,7 +250,7 @@ const App: React.FC = () => {
                   Experience the transformative power of authentic Ayurveda with personalized care from Dr. Ravi Shinde.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-                  <button 
+                  <button
                     onClick={navigateToBook}
                     className="bg-white text-[#064E3B] px-8 py-4 rounded-full font-bold hover:bg-emerald-50 transition-colors flex items-center justify-center gap-2"
                   >
@@ -276,19 +262,19 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  <SmallCTA 
+                  <SmallCTA
                     title="Ailment Guide"
                     desc="Browse health condition database"
                     image="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&q=80&w=200"
                     link="#ailment"
                   />
-                  <SmallCTA 
+                  <SmallCTA
                     title="Treatment Center"
                     desc="Explore Panchakarma therapies"
                     image="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=200"
                     link="#treatment"
                   />
-                  <SmallCTA 
+                  <SmallCTA
                     title="Nutrition Hub"
                     desc="Dietary guidance and recipes"
                     image="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=200"
@@ -307,8 +293,8 @@ const App: React.FC = () => {
                     <p className="text-gray-500">Subscribe to receive seasonal wellness tips, Ayurvedic recipes, and exclusive health insights.</p>
                   </div>
                   <div className="w-full md:w-auto flex flex-col sm:flex-row gap-2">
-                    <input 
-                      type="email" 
+                    <input
+                      type="email"
                       placeholder="Enter your email address"
                       className="px-6 py-3 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full sm:w-64"
                     />
@@ -326,19 +312,19 @@ const App: React.FC = () => {
                 <div className="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[40px] shadow-2xl relative">
                   <button onClick={() => setSelectedMedia(null)} className="absolute top-8 right-8 p-3 hover:bg-gray-100 rounded-2xl transition-colors z-10"><X size={24} /></button>
                   <div className="p-8 md:p-12">
-                     <div className="rounded-3xl overflow-hidden h-64 mb-8">
-                       <img src={selectedMedia.image} className="w-full h-full object-cover" alt={selectedMedia.title} />
-                     </div>
-                     <div className="flex items-center gap-2 text-emerald-700 text-[10px] font-bold uppercase tracking-widest mb-4">
-                        <BookOpen size={14} /> Media Recognition: {selectedMedia.source}
-                     </div>
-                     <h2 className="text-3xl font-serif text-gray-900 mb-4">{selectedMedia.title}</h2>
-                     <p className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-8">{selectedMedia.date}</p>
-                     <p className="text-gray-600 leading-relaxed mb-8">{selectedMedia.content}</p>
-                     <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 flex items-center justify-between">
-                        <p className="text-emerald-900 font-bold text-sm italic">"A testament to the efficacy of traditional wisdom."</p>
-                        <Leaf className="text-emerald-300" size={24} />
-                     </div>
+                    <div className="rounded-3xl overflow-hidden h-64 mb-8">
+                      <img src={selectedMedia.thumbnail} className="w-full h-full object-cover" alt={selectedMedia.title} />
+                    </div>
+                    <div className="flex items-center gap-2 text-emerald-700 text-[10px] font-bold uppercase tracking-widest mb-4">
+                      <BookOpen size={14} /> Media Recognition: {selectedMedia.source}
+                    </div>
+                    <h2 className="text-3xl font-serif text-gray-900 mb-4">{selectedMedia.title}</h2>
+                    <p className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-8">{selectedMedia.publishedDate}</p>
+                    <p className="text-gray-600 leading-relaxed mb-8">{selectedMedia.description}</p>
+                    <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 flex items-center justify-between">
+                      <p className="text-emerald-900 font-bold text-sm italic">"A testament to the efficacy of traditional wisdom."</p>
+                      <Leaf className="text-emerald-300" size={24} />
+                    </div>
                   </div>
                 </div>
               </div>

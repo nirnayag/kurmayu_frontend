@@ -24,16 +24,20 @@ const AilmentGuide: React.FC = () => {
         const mappedConditions = data.map((c: ConditionModel) => ({
           id: c._id,
           name: c.name,
-          severity: 'Moderate', // Default
-          severityColor: 'text-amber-600 bg-amber-50',
+          severity: c.severity,
+          severityColor: c.severity === 'Chronic' ? 'text-rose-600 bg-rose-50' :
+            c.severity === 'Moderate' ? 'text-amber-600 bg-amber-50' :
+              'text-emerald-600 bg-emerald-50',
           description: c.description,
-          dosha: 'Vata', // Default or parse from description/symptoms
-          doshaColor: 'bg-amber-100 text-amber-800',
-          image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=600',
+          dosha: c.dosha,
+          doshaColor: c.dosha.includes('Vata') ? 'bg-blue-100 text-blue-800' :
+            c.dosha.includes('Pitta') ? 'bg-orange-100 text-orange-800' :
+              'bg-emerald-100 text-emerald-800',
+          image: c.imageUrl,
           tags: c.symptoms,
-          timeframe: '3-6 months',
-          articles: 12,
-          categories: ['General'],
+          timeframe: c.duration,
+          articles: c.relatedArticlesCount,
+          categories: [c.dosha],
           fullDescription: c.description,
           protocol: ['Consult a practitioner', 'Follow Ayurvedic diet', 'Regular exercise']
         }));
