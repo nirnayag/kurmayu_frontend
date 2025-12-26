@@ -37,7 +37,7 @@ import DoshaSection from './components/DoshaSection';
 import SeasonalCalendar from './components/SeasonalCalendar';
 import SuccessStories from './components/SuccessStories';
 import Expertise from './components/Expertise';
-import TrustSection from './components/TrustSection';
+// import TrustSection from './components/TrustSection';
 import AilmentGuide from './components/AilmentGuide';
 import DoshaAssessment from './components/DoshaAssessment';
 import TreatmentCenter from './components/TreatmentCenter';
@@ -161,7 +161,7 @@ const App: React.FC = () => {
 
             <DoshaSection />
             <SeasonalCalendar />
-            <TrustSection />
+            {/* <TrustSection /> */}
 
             {/* Holistic Recommendations */}
             <section className="py-24 bg-[#F5F3EF]">

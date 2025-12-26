@@ -28,7 +28,7 @@ const SeasonalCalendar: React.FC = () => {
     const fetchGuidance = async () => {
       try {
         const seasonalData = await apiService.getSeasonalGuidance();
-        
+
         if (seasonalData && seasonalData.length > 0) {
           const mappedSeasons: SeasonData[] = seasonalData.map((s: NutritionModel, idx: number) => {
             // Determine icon and color based on season name
@@ -73,7 +73,7 @@ const SeasonalCalendar: React.FC = () => {
 
           const month = new Date().getMonth();
           let currentSeason: SeasonData | undefined;
-          
+
           // Try to find current season based on month mapping
           if (month >= 2 && month <= 4) currentSeason = mappedSeasons.find(s => s.name.toLowerCase().includes('spring'));
           else if (month >= 5 && month <= 7) currentSeason = mappedSeasons.find(s => s.name.toLowerCase().includes('summer'));
@@ -93,6 +93,19 @@ const SeasonalCalendar: React.FC = () => {
     fetchGuidance();
   }, []);
 
+  // Helper function to get color classes based on season color
+  const getColorClasses = (colorName: string) => {
+    const colorMap: Record<string, { bg: string; border: string; text: string }> = {
+      'emerald': { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-600' },
+      'amber': { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-600' },
+      'orange': { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-600' },
+      'blue': { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-600' },
+      'cyan': { bg: 'bg-cyan-50', border: 'border-cyan-200', text: 'text-cyan-600' },
+      'indigo': { bg: 'bg-indigo-50', border: 'border-indigo-200', text: 'text-indigo-600' },
+    };
+    return colorMap[colorName] || colorMap['cyan'];
+  };
+
   if (loading || !activeSeason) {
     return (
       <section className="py-24 bg-[#F5F3EF] flex items-center justify-center min-h-[400px]">
@@ -102,89 +115,147 @@ const SeasonalCalendar: React.FC = () => {
   }
 
   return (
-    <section className="py-24 bg-[#F5F3EF]">
+    <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="flex flex-col lg:flex-row justify-between items-end gap-8 mb-16">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-2 text-emerald-700 font-semibold mb-4 uppercase tracking-wider text-sm">
-              <Leaf size={16} />
-              Ritu Charya
-            </div>
-            <h2 className="text-4xl md:text-5xl font-serif mb-4">Ayurvedic Seasonal Wellness</h2>
-            <p className="text-gray-600">
-              Align your lifestyle with the rhythms of nature. Every season brings unique energy changes that require specific adjustments to your diet and routine.
-            </p>
+        {/* Header */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-2 text-emerald-700 font-semibold mb-4 uppercase tracking-wider text-sm">
+            <CalendarIcon size={16} />
+            Seasonal Wisdom
           </div>
-          <div className="flex items-center gap-2 bg-white p-2 rounded-2xl border border-gray-100 shadow-sm">
-            {seasons.map((s) => (
+          <h2 className="text-4xl md:text-5xl font-serif mb-4 text-gray-900">Ayurvedic Seasonal Wellness Calendar</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Align your health practices with nature's rhythms for optimal well-being throughout the year
+          </p>
+        </div>
+
+        {/* Season Selector */}
+        <div
+          className="grid gap-4 mb-12 mx-auto max-w-6xl"
+          style={{
+            gridTemplateColumns: `repeat(${seasons.length <= 5 ? seasons.length : Math.ceil(seasons.length / 2)}, minmax(0, 1fr))`
+          }}
+        >
+          {seasons.map((s) => {
+            const colors = getColorClasses(s.color);
+            return (
               <button
                 key={s.id}
                 onClick={() => setActiveSeason(s)}
-                className={`p-3 rounded-xl transition-all flex flex-col items-center gap-1 group ${activeSeason?.id === s.id
-                  ? 'bg-[#064E3B] text-white shadow-md'
-                  : 'text-gray-400 hover:bg-gray-50'
+                className={`px-8 py-4 rounded-2xl transition-all flex items-center gap-3 font-medium border-2 ${activeSeason?.id === s.id
+                    ? `${colors.bg} ${colors.border} text-gray-900 shadow-md`
+                    : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
                   }`}
               >
                 {s.icon}
-                <span className={`text-[10px] font-bold uppercase tracking-tighter ${activeSeason.id === s.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
-                  {s.name}
-                </span>
+                <div className="text-left">
+                  <div className="font-bold">{s.name.split('(')[0].trim()}</div>
+                  <div className="text-xs opacity-70">{s.months}</div>
+                </div>
               </button>
-            ))}
-          </div>
+            );
+          })}
         </div>
 
-        <div className="bg-white rounded-[40px] overflow-hidden shadow-2xl shadow-emerald-900/5 flex flex-col lg:flex-row">
-          <div className="lg:w-2/5 relative min-h-[400px]">
-            <img
-              src={activeSeason.image}
-              alt={activeSeason.name}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-            <div className="absolute bottom-10 left-10 text-white">
-              <div className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-xs font-bold uppercase mb-4">
-                Current Season Highlight
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          {/* Left Sidebar - Season Details */}
+          <div className="lg:col-span-2">
+            <div className={`${getColorClasses(activeSeason.color).bg} rounded-3xl p-8 border ${getColorClasses(activeSeason.color).border} sticky top-24`}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className={`p-3 bg-white rounded-xl ${getColorClasses(activeSeason.color).text}`}>
+                  {activeSeason.icon}
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">{activeSeason.name}</h3>
+                  <p className="text-sm text-gray-600">Kapha Season</p>
+                </div>
               </div>
-              <h3 className="text-4xl font-serif mb-2">{activeSeason.name}</h3>
-              <p className="text-emerald-100/80 font-serif italic text-xl">{activeSeason.sanskritName} Ritu</p>
-              <p className="mt-4 flex items-center gap-2 text-sm font-medium">
-                <Calendar size={16} /> {activeSeason.months}
-              </p>
+
+              <div className={`flex items-center gap-2 text-gray-700 mb-6 pb-6 border-b ${getColorClasses(activeSeason.color).border}`}>
+                <CalendarIcon size={16} />
+                <span className="font-medium">{activeSeason.months}</span>
+              </div>
+
+              <div className="mb-8">
+                <div className="relative h-64 rounded-2xl overflow-hidden mb-4">
+                  <img
+                    src={activeSeason.image}
+                    alt={activeSeason.name}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="lg:w-3/5 p-8 md:p-12 lg:p-16 space-y-12">
-            <div>
-              <h4 className="text-sm font-bold uppercase tracking-widest text-emerald-800 mb-4">Seasonal Essence</h4>
-              <p className="text-xl text-gray-700 leading-relaxed font-serif">
-                "{activeSeason.description}"
-              </p>
+          {/* Right Content - Recommendations */}
+          <div className="lg:col-span-3 space-y-8">
+            {/* Diet Recommendations */}
+            <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                <div className="p-2.5 bg-emerald-50 rounded-xl">
+                  <Utensils className="text-emerald-600" size={20} />
+                </div>
+                <h4 className="font-bold text-gray-900 text-lg">Diet Recommendations</h4>
+              </div>
+              <ul className="space-y-3">
+                {activeSeason.diet.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-gray-700">
+                    <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <RecommendationGroup
-                icon={<Utensils className="text-orange-500" />}
-                title="Ahara (Diet)"
-                items={activeSeason.diet}
-              />
-              <RecommendationGroup
-                icon={<Zap className="text-blue-500" />}
-                title="Vihara (Lifestyle)"
-                items={activeSeason.lifestyle}
-              />
-              <RecommendationGroup
-                icon={<Leaf className="text-emerald-500" />}
-                title="Aushadhi (Herbs)"
-                items={activeSeason.herbs}
-              />
-              <div className="bg-emerald-50 p-8 rounded-3xl border border-emerald-100 flex flex-col justify-center">
-                <h5 className="font-bold text-emerald-900 mb-4">Need a Personalized Plan?</h5>
-                <p className="text-sm text-emerald-800/70 mb-6">Your unique Prakriti (Constitution) determines exactly how you should navigate the seasons.</p>
-                <button className="flex items-center gap-2 text-emerald-900 font-bold hover:gap-3 transition-all">
-                  Consult Dr. Ravi Shinde <ArrowRight size={18} />
-                </button>
+            {/* Lifestyle Recommendations */}
+            <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                <div className="p-2.5 bg-blue-50 rounded-xl">
+                  <Zap className="text-blue-600" size={20} />
+                </div>
+                <h4 className="font-bold text-gray-900 text-lg">Lifestyle Recommendations</h4>
               </div>
+              <ul className="space-y-3">
+                {activeSeason.lifestyle.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-gray-700">
+                    <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Herbs Recommendations */}
+            {activeSeason.herbs.length > 0 && (
+              <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm">
+                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+                  <div className="p-2.5 bg-emerald-50 rounded-xl">
+                    <Sprout className="text-emerald-600" size={20} />
+                  </div>
+                  <h4 className="font-bold text-gray-900 text-lg">Herbs Recommendations</h4>
+                </div>
+                <ul className="space-y-3">
+                  {activeSeason.herbs.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-gray-700">
+                      <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Personalized Plan CTA */}
+            <div className="bg-emerald-50 rounded-3xl p-8 border border-emerald-100">
+              <h5 className="font-bold text-emerald-900 mb-3 text-lg">Need a Personalized Plan?</h5>
+              <p className="text-sm text-emerald-800/80 mb-6 leading-relaxed">
+                Your unique Prakriti (Constitution) determines exactly how you should navigate the seasons.
+              </p>
+              <button className="flex items-center gap-2 text-emerald-900 font-bold hover:gap-3 transition-all">
+                Consult Dr. Ravi Shinde <ArrowRight size={18} />
+              </button>
             </div>
           </div>
         </div>
