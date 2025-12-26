@@ -51,7 +51,7 @@ const Hero: React.FC = () => {
           <div className="lg:w-1/2 relative">
             <div className="relative z-20 rounded-[40px] overflow-hidden shadow-2xl border-8 border-white">
               <img 
-                src="https://picsum.photos/seed/ayurvedahero/800/1000" 
+                src=" https://thumbs.dreamstime.com/b/happy-young-indian-doctor-holding-hand-female-patient-giving-support-motivating-recovery-rehabilitation-telling-good-399999435.jpg" 
                 alt="Ayurvedic Treatment" 
                 className="w-full h-auto"
               />
