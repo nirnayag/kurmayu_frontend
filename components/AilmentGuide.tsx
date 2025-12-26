@@ -12,8 +12,6 @@ import {
 
 const AilmentGuide: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [detailAilment, setDetailAilment] = useState<any | null>(null);
-  const [detailApproach, setDetailApproach] = useState<any | null>(null);
   const [conditions, setConditions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -122,7 +120,10 @@ const AilmentGuide: React.FC = () => {
             </div>
             <div className="flex gap-4">
               <button
-                onClick={() => setDetailAilment(conditions[0])}
+                onClick={() => {
+                  (window as any).ailmentDetailData = conditions[0];
+                  window.location.hash = `#ailment/${conditions[0]?.id}`;
+                }}
                 className="bg-[#064E3B] text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 text-sm hover:bg-emerald-900 transition-all"
               >
                 <BookOpen size={18} /> Read Full Guide
@@ -189,7 +190,10 @@ const AilmentGuide: React.FC = () => {
                   <span className="flex items-center gap-1"><Library size={12} /> {c.articles} articles</span>
                 </div>
                 <button
-                  onClick={() => setDetailAilment(c)}
+                  onClick={() => {
+                    (window as any).ailmentDetailData = c;
+                    window.location.hash = `#ailment/${c.id}`;
+                  }}
                   className="text-emerald-700 hover:gap-2 transition-all flex items-center gap-1"
                 >
                   Learn More <ArrowRight size={14} />
@@ -209,7 +213,10 @@ const AilmentGuide: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {approaches.map((app, i) => (
-              <div key={i} onClick={() => setDetailApproach(app)} className="bg-gray-50/50 p-8 rounded-[32px] border border-gray-100 hover:shadow-lg transition-all cursor-pointer group">
+              <div key={i} onClick={() => {
+                (window as any).approachDetailData = app;
+                window.location.hash = `#approach/${encodeURIComponent(app.title)}`;
+              }} className="bg-gray-50/50 p-8 rounded-[32px] border border-gray-100 hover:shadow-lg transition-all cursor-pointer group">
                 <div className="bg-white w-12 h-12 rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-emerald-50">
                   {app.icon}
                 </div>
@@ -224,52 +231,7 @@ const AilmentGuide: React.FC = () => {
         </div>
       </section>
 
-      {/* Ailment Detail Modal */}
-      {detailAilment && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[40px] shadow-2xl relative">
-            <button onClick={() => setDetailAilment(null)} className="absolute top-8 right-8 p-3 hover:bg-gray-100 rounded-2xl transition-colors z-10"><X size={24} /></button>
-            <div className="p-8 md:p-16">
-              <div className="flex flex-col md:flex-row gap-12 mb-12">
-                <div className="md:w-1/2 rounded-3xl overflow-hidden shadow-lg h-64">
-                  <img src={detailAilment.image} className="w-full h-full object-cover" alt={detailAilment.name} />
-                </div>
-                <div className="md:w-1/2 flex flex-col justify-center">
-                  <h2 className="text-4xl font-serif text-gray-900 mb-4">{detailAilment.name}</h2>
-                  <p className="text-xs font-bold text-emerald-800 uppercase tracking-widest mb-4">Ayurvedic Pathogenesis</p>
-                  <p className="text-gray-600 leading-relaxed mb-6">{detailAilment.fullDescription || detailAilment.description}</p>
-                </div>
-              </div>
-              <div className="bg-emerald-50 p-8 rounded-[32px] border border-emerald-100">
-                <h3 className="text-xl font-bold mb-6 flex items-center gap-2"><Activity className="text-emerald-600" /> Recommended Protocol</h3>
-                <ul className="space-y-3">
-                  {detailAilment.protocol?.map((step: string, i: number) => (
-                    <li key={i} className="flex items-center gap-3 text-sm text-emerald-900 font-medium"><CheckCircle2 size={16} /> {step}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
-      {/* Approach Detail Modal */}
-      {detailApproach && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[40px] shadow-2xl relative">
-            <button onClick={() => setDetailApproach(null)} className="absolute top-8 right-8 p-3 hover:bg-gray-100 rounded-2xl transition-colors z-10"><X size={24} /></button>
-            <div className="p-8 md:p-12">
-              <div className="bg-emerald-50 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">{detailApproach.icon}</div>
-              <h2 className="text-3xl font-serif text-gray-900 mb-4">{detailApproach.title}</h2>
-              <p className="text-gray-600 leading-relaxed mb-8">{detailApproach.detail}</p>
-              <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
-                <h4 className="text-xs font-bold uppercase tracking-widest text-emerald-800 mb-4 flex items-center gap-2"><ShieldCheck size={16} /> Clinical Relevance</h4>
-                <p className="text-sm text-gray-600">This approach is integrated into over 90% of our clinical pathways, ensuring a balanced treatment experience that respects the body's natural state.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

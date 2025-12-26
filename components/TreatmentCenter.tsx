@@ -34,7 +34,6 @@ const TreatmentCenter: React.FC = () => {
   const [herbSearch, setHerbSearch] = useState('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [openSafety, setOpenSafety] = useState<number | null>(null);
-  const [detailItem, setDetailItem] = useState<any | null>(null);
   const [herbs, setHerbs] = useState<HerbData[]>([]);
   const [practitioners, setPractitioners] = useState<any[]>([]);
   const [allTreatments, setAllTreatments] = useState<any[]>([]);
@@ -215,7 +214,10 @@ const TreatmentCenter: React.FC = () => {
                       </div>
 
                       <button
-                        onClick={() => setDetailItem({ ...t, type: 'treatment', details: comparisonData[t.name.toLowerCase()] || {} })}
+                        onClick={() => {
+                          (window as any).treatmentDetailData = { ...t, type: 'treatment', details: comparisonData[t.name.toLowerCase()] || {} };
+                          window.location.hash = `#treatment/${t.id}`;
+                        }}
                         className="w-full border border-emerald-900 text-emerald-900 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-emerald-50 transition-colors"
                       >
                         <Info size={16} /> Learn More
@@ -265,8 +267,8 @@ const TreatmentCenter: React.FC = () => {
                       <div className="flex flex-wrap gap-1">
                         {herb.doshas.map((d: string) => (
                           <span key={d} className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${d === 'Vata' ? 'bg-blue-50 text-blue-600' :
-                              d === 'Pitta' ? 'bg-red-50 text-red-600' :
-                                'bg-emerald-50 text-emerald-600'
+                            d === 'Pitta' ? 'bg-red-50 text-red-600' :
+                              'bg-emerald-50 text-emerald-600'
                             }`}>
                             {d}
                           </span>
@@ -287,7 +289,10 @@ const TreatmentCenter: React.FC = () => {
                   </div>
 
                   <button
-                    onClick={() => setDetailItem({ ...herb, type: 'herb' })}
+                    onClick={() => {
+                      (window as any).herbDetailData = herb;
+                      window.location.hash = `#herb/${herb.id}`;
+                    }}
                     className="w-full bg-[#064E3B] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-emerald-900 transition-all"
                   >
                     <BookOpen size={18} /> View Details
@@ -370,7 +375,10 @@ const TreatmentCenter: React.FC = () => {
                   <p className="text-emerald-700 font-bold text-[10px] uppercase tracking-widest mt-1 mb-3">{dr.deg}</p>
                 </div>
                 <button
-                  onClick={() => setDetailItem({ ...dr, type: 'practitioner' })}
+                  onClick={() => {
+                    (window as any).practitionerDetailData = dr;
+                    window.location.hash = `#practitioner/${dr.name}`;
+                  }}
                   className="bg-[#064E3B] text-white py-4 rounded-xl font-bold hover:bg-emerald-800 transition-colors"
                 >
                   View Profile
@@ -381,154 +389,7 @@ const TreatmentCenter: React.FC = () => {
         </div>
       </section>
 
-      {/* Detail Modal */}
-      {detailItem && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[40px] shadow-2xl relative">
-            <button
-              onClick={() => setDetailItem(null)}
-              className="absolute top-8 right-8 p-3 hover:bg-gray-100 rounded-2xl transition-colors z-10"
-            >
-              <X size={24} />
-            </button>
 
-            {detailItem.type === 'treatment' && (
-              <div className="p-8 md:p-16">
-                <div className="flex flex-col md:flex-row gap-12 mb-12">
-                  <div className="md:w-1/2 rounded-3xl overflow-hidden shadow-lg h-64">
-                    <img src={detailItem.img} className="w-full h-full object-cover" alt={detailItem.name} />
-                  </div>
-                  <div className="md:w-1/2 flex flex-col justify-center">
-                    <h2 className="text-4xl font-serif text-gray-900 mb-4">{detailItem.name}</h2>
-                    <p className="text-emerald-700 font-bold text-xs uppercase tracking-widest mb-6">{detailItem.dur} • Intensive Healing</p>
-                    <p className="text-gray-500 leading-relaxed mb-6">{detailItem.desc}</p>
-                    {detailItem.recommendedFor && (
-                      <div className="mb-6">
-                        <p className="text-emerald-900 font-bold text-[10px] uppercase tracking-widest mb-2">Recommended For</p>
-                        <p className="text-sm text-gray-600">{detailItem.recommendedFor}</p>
-                      </div>
-                    )}
-                    <div className="flex flex-wrap gap-2">
-                      {detailItem.benefits.map((b: string) => <span key={b} className="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase">{b}</span>)}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-12">
-                  <div className="bg-gray-50 p-8 rounded-[32px] border border-gray-100">
-                    <h3 className="text-xl font-bold mb-6 flex items-center gap-3"><PlayCircle className="text-emerald-600" /> Procedure Breakdown</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-                      <div className="space-y-2">
-                        <p className="font-bold text-emerald-900 uppercase text-[10px] tracking-widest">Step 1: Preparation</p>
-                        <p className="text-gray-600">Oleation and heating of the body to loosen toxins (ama).</p>
-                      </div>
-                      <div className="space-y-2">
-                        <p className="font-bold text-emerald-900 uppercase text-[10px] tracking-widest">Step 2: Core Therapy</p>
-                        <p className="text-gray-600">{detailItem.details?.procedure || 'Main therapeutic administration as per protocol.'}</p>
-                      </div>
-                      <div className="space-y-2">
-                        <p className="font-bold text-emerald-900 uppercase text-[10px] tracking-widest">Step 3: Recovery</p>
-                        <p className="text-gray-600">Gradual reintroduction of diet (Samsarjana Krama).</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                      <h4 className="font-bold text-emerald-900 mb-4 flex items-center gap-2"><CheckCircle2 size={18} /> Therapeutic Indications</h4>
-                      <ul className="space-y-2 text-sm text-gray-500">
-                        {detailItem.details?.bestFor?.map((f: string) => <li key={f} className="flex items-center gap-2">• {f}</li>) || <li>• Chronic lifestyle disorders</li>}
-                      </ul>
-                    </div>
-                    <div className="bg-rose-50 p-6 rounded-2xl border border-rose-100">
-                      <h4 className="font-bold text-rose-900 mb-4 flex items-center gap-2"><AlertCircle size={18} /> Contraindications</h4>
-                      <p className="text-xs text-rose-800 leading-relaxed">Not suitable during menstruation, pregnancy, acute fever, or extreme physical weakness. Always consult with a Vaidya before beginning.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {detailItem.type === 'herb' && (
-              <div className="p-8 md:p-16">
-                <div className="flex flex-col md:flex-row gap-12 mb-12">
-                  <div className="md:w-1/3 rounded-[32px] overflow-hidden shadow-lg h-80">
-                    <img src={detailItem.image} className="w-full h-full object-cover" alt={detailItem.name} />
-                  </div>
-                  <div className="md:w-2/3">
-                    <h2 className="text-4xl font-serif text-gray-900 mb-2">{detailItem.name}</h2>
-                    <p className="text-[14px] font-serif italic text-gray-400 mb-8">{detailItem.botanicalName}</p>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                      <HerbProperty label="Rasa" value={detailItem.rasa || 'Tikta'} />
-                      <HerbProperty label="Virya" value={detailItem.virya || 'Ushna'} />
-                      <HerbProperty label="Vipaka" value={detailItem.vipaka || 'Katu'} />
-                      <HerbProperty label="Dosha" value={detailItem.doshas.join('/')} />
-                    </div>
-
-                    <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 mb-8">
-                      <h4 className="text-xs font-bold uppercase tracking-widest text-emerald-800 mb-3 flex items-center gap-2"><Beaker size={14} /> Description & Benefits</h4>
-                      <p className="text-sm text-emerald-900 leading-relaxed mb-4">{detailItem.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {detailItem.keyBenefits.map((b: string) => (
-                          <span key={b} className="bg-white/50 text-emerald-800 px-2 py-1 rounded-md text-[10px] font-bold uppercase border border-emerald-100">
-                            {b}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                      <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
-                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Dosage</h4>
-                        <p className="text-sm text-gray-700 font-medium">{detailItem.dosage}</p>
-                      </div>
-                      <div className="bg-rose-50 p-4 rounded-2xl border border-rose-100">
-                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-rose-400 mb-2">Precautions</h4>
-                        <p className="text-xs text-rose-700 leading-relaxed">{detailItem.precautions}</p>
-                      </div>
-                    </div>
-
-                    <button className="bg-[#064E3B] text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-900 transition-all flex items-center gap-2">
-                      Add to Wellness Basket <ArrowRight size={18} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {detailItem.type === 'practitioner' && (
-              <div className="p-8 md:p-16">
-                <div className="flex flex-col md:flex-row gap-12">
-                  <div className="md:w-1/3 text-center">
-                    <img src={detailItem.image} className="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-emerald-50 object-cover" alt={detailItem.name} />
-                    <h2 className="text-2xl font-bold">{detailItem.name}</h2>
-                    <p className="text-emerald-700 font-bold text-xs uppercase tracking-widest mb-6">{detailItem.deg}</p>
-                    <div className="bg-amber-50 p-4 rounded-2xl text-amber-800 text-xs font-medium border border-amber-100">
-                      Featured Specialist: {detailItem.specs[0]}
-                    </div>
-                  </div>
-                  <div className="md:w-2/3 space-y-8">
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-4 border-b pb-2">Clinical Expertise</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {detailItem.specs.map((s: string) => <span key={s} className="px-3 py-1 bg-gray-50 text-gray-500 rounded-lg text-xs font-bold">{s}</span>)}
-                      </div>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 mb-4 border-b pb-2">Biography</h4>
-                      <p className="text-sm text-gray-500 leading-relaxed">Experienced Ayurvedic physician with over {detailItem.exp} years of practice in integrating traditional wisdom with modern diagnostics.</p>
-                    </div>
-                    <button className="w-full bg-[#064E3B] text-white py-4 rounded-xl font-bold hover:bg-emerald-900 transition-all">
-                      Schedule Consultation
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

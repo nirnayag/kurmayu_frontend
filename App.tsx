@@ -44,34 +44,79 @@ import TreatmentCenter from './components/TreatmentCenter';
 import NutritionHub from './components/NutritionHub';
 import ChatBot from './components/ChatBot';
 import ConsultationPage from './components/ConsultationPage';
+import MediaDetailPage from './components/MediaDetailPage';
+import TreatmentDetailPage from './components/TreatmentDetailPage';
+import HerbDetailPage from './components/HerbDetailPage';
+import PractitionerDetailPage from './components/PractitionerDetailPage';
+import RecipeDetailPage from './components/RecipeDetailPage';
+import FoodDetailPage from './components/FoodDetailPage';
+import AilmentDetailPage from './components/AilmentDetailPage';
+import ApproachDetailPage from './components/ApproachDetailPage';
 
-type ViewState = 'home' | 'ailment-guide' | 'dosha-assessment' | 'treatment-center' | 'nutrition-hub' | 'consultation';
+type ViewState = 'home' | 'ailment-guide' | 'dosha-assessment' | 'treatment-center' | 'nutrition-hub' | 'consultation' | 'media-detail' | 'treatment-detail' | 'herb-detail' | 'practitioner-detail' | 'recipe-detail' | 'food-detail' | 'ailment-detail' | 'approach-detail';
 
 const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('home');
-  const [selectedMedia, setSelectedMedia] = useState<MediaRecognition | null>(null);
   const [mediaRecognitions, setMediaRecognitions] = useState<MediaRecognition[]>([]);
+
+  // State for detail page items
+  const [selectedItemId, setSelectedItemId] = useState<string>('');
+  const [selectedItemData, setSelectedItemData] = useState<any>(null);
 
   // Handle navigation from hash
   useEffect(() => {
     const handleHash = () => {
-      const hash = window.location.hash;
-      if (hash === '#ailment') {
+      const hash = window.location.hash.substring(1); // Remove #
+      const [route, id] = hash.split('/');
+
+      if (route === 'ailment' && id) {
+        setView('ailment-detail');
+        setSelectedItemId(id);
+        window.scrollTo(0, 0);
+      } else if (route === 'ailment') {
         setView('ailment-guide');
         window.scrollTo(0, 0);
-      } else if (hash === '#dosha') {
-        setView('dosha-assessment');
+      } else if (route === 'approach' && id) {
+        setView('approach-detail');
+        setSelectedItemId(id);
         window.scrollTo(0, 0);
-      } else if (hash === '#treatment') {
+      } else if (route === 'media' && id) {
+        setView('media-detail');
+        setSelectedItemId(id);
+        window.scrollTo(0, 0);
+      } else if (route === 'treatment' && id) {
+        setView('treatment-detail');
+        setSelectedItemId(id);
+        window.scrollTo(0, 0);
+      } else if (route === 'treatment') {
         setView('treatment-center');
         window.scrollTo(0, 0);
-      } else if (hash === '#nutrition') {
+      } else if (route === 'herb' && id) {
+        setView('herb-detail');
+        setSelectedItemId(id);
+        window.scrollTo(0, 0);
+      } else if (route === 'practitioner' && id) {
+        setView('practitioner-detail');
+        setSelectedItemId(id);
+        window.scrollTo(0, 0);
+      } else if (route === 'recipe' && id) {
+        setView('recipe-detail');
+        setSelectedItemId(id);
+        window.scrollTo(0, 0);
+      } else if (route === 'food' && id) {
+        setView('food-detail');
+        setSelectedItemId(id);
+        window.scrollTo(0, 0);
+      } else if (route === 'nutrition') {
         setView('nutrition-hub');
         window.scrollTo(0, 0);
-      } else if (hash === '#book') {
+      } else if (route === 'dosha') {
+        setView('dosha-assessment');
+        window.scrollTo(0, 0);
+      } else if (route === 'book') {
         setView('consultation');
         window.scrollTo(0, 0);
-      } else {
+      } else if (hash === '') {
         setView('home');
       }
     };
@@ -98,16 +143,38 @@ const App: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
+  const navigateBack = (defaultHash: string) => {
+    window.location.hash = defaultHash;
+  };
+
   const renderContent = () => {
     switch (view) {
+      case 'media-detail':
+        const mediaItem = mediaRecognitions.find(m => m._id === selectedItemId);
+        if (!mediaItem) return <div>Media not found</div>;
+        return <MediaDetailPage media={mediaItem} />;
+      case 'ailment-detail':
+        return <AilmentDetailPage ailment={selectedItemData || (window as any).ailmentDetailData} />;
+      case 'approach-detail':
+        return <ApproachDetailPage approach={selectedItemData || (window as any).approachDetailData} />;
       case 'ailment-guide':
         return <AilmentGuide />;
       case 'dosha-assessment':
         return <DoshaAssessment onStart={() => console.log('Assessment Start')} />;
       case 'treatment-center':
         return <TreatmentCenter />;
+      case 'treatment-detail':
+        return <TreatmentDetailPage treatment={(window as any).treatmentDetailData} />;
+      case 'herb-detail':
+        return <HerbDetailPage herb={(window as any).herbDetailData} />;
+      case 'practitioner-detail':
+        return <PractitionerDetailPage practitioner={(window as any).practitionerDetailData} />;
       case 'nutrition-hub':
         return <NutritionHub />;
+      case 'recipe-detail':
+        return <RecipeDetailPage recipe={(window as any).recipeDetailData} />;
+      case 'food-detail':
+        return <FoodDetailPage food={(window as any).foodDetailData} />;
       case 'consultation':
         return <ConsultationPage />;
       case 'home':
@@ -233,7 +300,9 @@ const App: React.FC = () => {
                     title={media.title}
                     date={media.publishedDate}
                     image={media.thumbnail}
-                    onView={() => setSelectedMedia(media)}
+                    onView={() => {
+                      window.location.hash = `#media/${media._id}`;
+                    }}
                   />
                 ))}
               </div>
@@ -306,29 +375,7 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            {/* Media Detail Modal */}
-            {selectedMedia && (
-              <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                <div className="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[40px] shadow-2xl relative">
-                  <button onClick={() => setSelectedMedia(null)} className="absolute top-8 right-8 p-3 hover:bg-gray-100 rounded-2xl transition-colors z-10"><X size={24} /></button>
-                  <div className="p-8 md:p-12">
-                    <div className="rounded-3xl overflow-hidden h-64 mb-8">
-                      <img src={selectedMedia.thumbnail} className="w-full h-full object-cover" alt={selectedMedia.title} />
-                    </div>
-                    <div className="flex items-center gap-2 text-emerald-700 text-[10px] font-bold uppercase tracking-widest mb-4">
-                      <BookOpen size={14} /> Media Recognition: {selectedMedia.source}
-                    </div>
-                    <h2 className="text-3xl font-serif text-gray-900 mb-4">{selectedMedia.title}</h2>
-                    <p className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-8">{selectedMedia.publishedDate}</p>
-                    <p className="text-gray-600 leading-relaxed mb-8">{selectedMedia.description}</p>
-                    <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 flex items-center justify-between">
-                      <p className="text-emerald-900 font-bold text-sm italic">"A testament to the efficacy of traditional wisdom."</p>
-                      <Leaf className="text-emerald-300" size={24} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+
           </main>
         );
     }

@@ -11,8 +11,6 @@ import {
 } from 'lucide-react';
 
 const NutritionHub: React.FC = () => {
-  const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
-  const [selectedFood, setSelectedFood] = useState<any | null>(null);
   const [mealPlanDosha, setMealPlanDosha] = useState('');
   const [mealPlanSeason, setMealPlanSeason] = useState('');
   const [mealPlanGoal, setMealPlanGoal] = useState('');
@@ -65,10 +63,10 @@ const NutritionHub: React.FC = () => {
           title: fr.name,
           author: fr.origin,
           desc: fr.benefits.join('. '),
-          stats: { 
-            likes: fr.likes || 45, 
-            comments: fr.comments || 12, 
-            shares: fr.shares || 8 
+          stats: {
+            likes: fr.likes || 45,
+            comments: fr.comments || 12,
+            shares: fr.shares || 8
           },
           image: fr.image || "https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&q=80&w=600"
         })));
@@ -201,7 +199,10 @@ const NutritionHub: React.FC = () => {
 
                   <div className="flex gap-2 mt-auto">
                     <button
-                      onClick={() => setSelectedRecipe(recipe)}
+                      onClick={() => {
+                        (window as any).recipeDetailData = recipe;
+                        window.location.hash = `#recipe/${recipe.id}`;
+                      }}
                       className="flex-1 bg-[#064E3B] text-white py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-emerald-900 transition-all flex items-center justify-center gap-2"
                     >
                       <Utensils size={14} /> View Recipe
@@ -233,135 +234,17 @@ const NutritionHub: React.FC = () => {
               <FeaturedFoodCard
                 key={food.id}
                 {...food}
-                onViewDetails={() => setSelectedFood(food)}
+                onViewDetails={() => {
+                  (window as any).foodDetailData = food;
+                  window.location.hash = `#food/${food.id}`;
+                }}
               />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Recipe Detail Modal */}
-      {selectedRecipe && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[40px] shadow-2xl relative">
-            <button
-              onClick={() => setSelectedRecipe(null)}
-              className="absolute top-8 right-8 p-3 hover:bg-gray-100 rounded-2xl transition-colors z-10"
-            >
-              <X size={24} />
-            </button>
-            <div className="p-8 md:p-16">
-              <div className="flex flex-col md:flex-row gap-12 mb-12">
-                <div className="md:w-1/2 rounded-3xl overflow-hidden shadow-lg h-80">
-                  <img src={selectedRecipe.image} className="w-full h-full object-cover" alt={selectedRecipe.title} />
-                </div>
-                <div className="md:w-1/2">
-                  <h2 className="text-4xl font-serif text-gray-900 mb-6">{selectedRecipe.title}</h2>
-                  <div className="flex gap-6 mb-8 text-gray-400 font-bold text-[10px] uppercase tracking-widest">
-                    <span className="flex items-center gap-1"><Clock size={14} /> {selectedRecipe.time}</span>
-                    <span className="flex items-center gap-1"><Users size={14} /> {selectedRecipe.servings}</span>
-                  </div>
-                  <div className="space-y-4 mb-8">
-                    <p className="text-xs font-bold text-emerald-800 uppercase tracking-widest">Ingredients:</p>
-                    <ul className="grid grid-cols-1 gap-2">
-                      {selectedRecipe.ingredients.map((ing: string) => (
-                        <li key={ing} className="text-sm text-gray-600 flex items-center gap-2"><CheckCircle2 size={14} className="text-emerald-500" /> {ing}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-gray-50 p-8 rounded-[32px] border border-gray-100">
-                  <h3 className="text-xl font-bold mb-6 flex items-center gap-2"><ChefHat className="text-emerald-600" /> Preparation</h3>
-                  <ol className="space-y-4">
-                    {selectedRecipe.instructions.map((step: string, i: number) => (
-                      <li key={i} className="flex gap-4 text-sm text-gray-600">
-                        <span className="font-bold text-emerald-900">{i + 1}.</span>
-                        {step}
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-                <div className="bg-emerald-50/50 p-8 rounded-[32px] border border-emerald-100">
-                  <h3 className="text-xl font-bold mb-6 flex items-center gap-2"><Beaker className="text-emerald-700" /> Therapeutic Insight</h3>
-                  <p className="text-sm text-emerald-900 leading-relaxed italic">
-                    {selectedRecipe.nutritionalInsight}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
-      {/* Food Detail Modal */}
-      {selectedFood && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[40px] shadow-2xl relative">
-            <button
-              onClick={() => setSelectedFood(null)}
-              className="absolute top-8 right-8 p-3 hover:bg-gray-100 rounded-2xl transition-colors z-10"
-            >
-              <X size={24} />
-            </button>
-            <div className="p-8 md:p-16">
-              <div className="flex flex-col md:flex-row gap-12 mb-12">
-                <div className="md:w-1/3 rounded-[32px] overflow-hidden shadow-xl h-[400px]">
-                  <img src={selectedFood.image} className="w-full h-full object-cover" alt={selectedFood.name} />
-                </div>
-                <div className="md:w-2/3">
-                  <div className="flex items-center gap-2 text-emerald-700 font-bold text-[10px] uppercase tracking-widest mb-4">
-                    <Database size={14} /> Food Database Detail
-                  </div>
-                  <h2 className="text-4xl font-serif text-gray-900 mb-2">{selectedFood.name}</h2>
-                  <p className="text-sm font-serif italic text-gray-400 mb-8">Sanskrit: {selectedFood.sanskrit}</p>
-
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-                    <HerbProperty label="Rasa (Taste)" value={selectedFood.taste} />
-                    <HerbProperty label="Virya (Potency)" value={selectedFood.potency} />
-                    <HerbProperty label="Dosha Impact" value={selectedFood.dosha} />
-                  </div>
-
-                  <div className="space-y-6">
-                    <div>
-                      <h4 className="text-xs font-bold uppercase tracking-widest text-emerald-800 mb-2">Ayurvedic Perspective</h4>
-                      <p className="text-sm text-gray-600 leading-relaxed">{selectedFood.description}</p>
-                    </div>
-                    <div className="bg-amber-50 p-6 rounded-2xl border border-amber-100">
-                      <h4 className="text-xs font-bold uppercase tracking-widest text-amber-800 mb-2 flex items-center gap-2"><Zap size={14} /> Biochemistry</h4>
-                      <p className="text-sm text-amber-900 leading-relaxed font-medium">{selectedFood.biochemistry}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-gray-50 p-8 rounded-[32px] border border-gray-100">
-                  <h4 className="font-bold text-gray-900 mb-6 flex items-center gap-2"><Sparkles className="text-emerald-600" /> Health Benefits</h4>
-                  <ul className="space-y-3">
-                    {selectedFood.benefits.map((b: string) => (
-                      <li key={b} className="flex items-center gap-3 text-sm text-gray-600 font-medium">
-                        <CheckCircle2 size={16} className="text-emerald-500" /> {b}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="bg-white border border-gray-100 p-8 rounded-[32px] shadow-sm">
-                  <h4 className="font-bold text-gray-900 mb-6 flex items-center gap-2"><ChefHat className="text-emerald-600" /> Preparation Tips</h4>
-                  <ul className="space-y-3">
-                    {selectedFood.prepTips.map((tip: string) => (
-                      <li key={tip} className="flex items-start gap-3 text-sm text-gray-500">
-                        <ArrowRight size={14} className="mt-1 flex-shrink-0 text-emerald-400" /> {tip}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
