@@ -13,9 +13,9 @@ const Footer: React.FC = () => {
           </p>
         </div>
         <div className="flex gap-8">
-          <a href="#" className="text-xs text-gray-400 font-medium uppercase tracking-widest hover:text-emerald-700 transition-colors">Privacy Policy</a>
-          <a href="#" className="text-xs text-gray-400 font-medium uppercase tracking-widest hover:text-emerald-700 transition-colors">Terms of Service</a>
-          <a href="#" className="text-xs text-gray-400 font-medium uppercase tracking-widest hover:text-emerald-700 transition-colors">Contact Us</a>
+          <a href="#privacy-policy" className="text-xs text-gray-400 font-medium uppercase tracking-widest hover:text-emerald-700 transition-colors">Privacy Policy</a>
+          <a href="#terms-of-service" className="text-xs text-gray-400 font-medium uppercase tracking-widest hover:text-emerald-700 transition-colors">Terms of Service</a>
+          <a href="#contact-us" className="text-xs text-gray-400 font-medium uppercase tracking-widest hover:text-emerald-700 transition-colors">Contact Us</a>
         </div>
       </div>
     </footer>

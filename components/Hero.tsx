@@ -5,12 +5,12 @@ import { Leaf, Search, Calendar, CheckCircle2, Star } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative pt-12 pb-24 md:pt-24 md:pb-36 bg-[#FDFCF7] overflow-hidden">
+    <section className="relative min-h-screen pt-16 pb-12 bg-[#FDFCF7] overflow-hidden">
       {/* Decorative leaf backgrounds */}
-      <div className="absolute top-20 -right-20 text-emerald-50/50 rotate-12 hidden lg:block">
-        <Leaf size={600} strokeWidth={0.2} />
-      </div>
-      
+      {/* <div className="absolute top-20 -right-20 text-emerald-50/50 rotate-12 hidden lg:block">
+        <Leaf size={700} strokeWidth={0.2} />
+      </div> */}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2 relative z-10 text-center lg:text-left">
@@ -20,12 +20,12 @@ const Hero: React.FC = () => {
             </div>
             <h1 className="text-5xl md:text-7xl font-serif mb-8 leading-tight">
               Ancient Wisdom, <br />
-              <span className="text-emerald-700 italic">Modern Application</span>
+              <span className="text-emerald-700 italic">Moern Application</span>
             </h1>
             <p className="text-lg text-gray-600 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
               Detoxify naturally with Panchakarma and seasonal cleansing. Experience holistic wellness that balances your unique constitution.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
               <button className="w-full sm:w-auto bg-[#064E3B] text-white px-8 py-4 rounded-full font-bold hover:bg-emerald-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/10">
                 Discover Your Dosha <Leaf size={18} />
@@ -37,8 +37,8 @@ const Hero: React.FC = () => {
 
             <div className="mt-12 flex items-center justify-center lg:justify-start gap-4">
               <div className="flex -space-x-3">
-                {[1,2,3,4].map(i => (
-                  <img key={i} src={`https://i.pravatar.cc/100?img=${i+10}`} alt="user" className="w-10 h-10 rounded-full border-2 border-white" />
+                {[1, 2, 3, 4].map(i => (
+                  <img key={i} src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="user" className="w-10 h-10 rounded-full border-2 border-white" />
                 ))}
               </div>
               <div className="text-left">
@@ -49,14 +49,14 @@ const Hero: React.FC = () => {
           </div>
 
           <div className="lg:w-1/2 relative">
-            <div className="relative z-20 rounded-[40px] overflow-hidden shadow-2xl border-8 border-white">
-              <img 
-                src=" https://thumbs.dreamstime.com/b/happy-young-indian-doctor-holding-hand-female-patient-giving-support-motivating-recovery-rehabilitation-telling-good-399999435.jpg" 
-                alt="Ayurvedic Treatment" 
-                className="w-full h-auto"
+            <div className="relative z-20 rounded-[40px] overflow-hidden shadow-2xl border-8 border-white bg-white">
+              <img
+                src=" https://thumbs.dreamstime.com/b/happy-young-indian-doctor-holding-hand-female-patient-giving-support-motivating-recovery-rehabilitation-telling-good-399999435.jpg"
+                alt="Ayurvedic Treatment"
+                className="w-full max-h-[70vh] object-contain"
               />
             </div>
-            
+
             {/* Dr. Card Overlay */}
             <div className="absolute -bottom-10 -left-10 md:left-0 z-30 bg-white p-6 rounded-2xl shadow-xl max-w-xs border border-emerald-50 hidden sm:block">
               <div className="flex items-center gap-4 mb-4">

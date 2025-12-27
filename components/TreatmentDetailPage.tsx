@@ -60,7 +60,7 @@ const TreatmentDetailPage: React.FC<TreatmentDetailPageProps> = ({ treatment }) 
                 </div>
             </div>
         </div>
-        </div >
+
     );
 };
 export default TreatmentDetailPage;

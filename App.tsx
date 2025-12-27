@@ -52,8 +52,11 @@ import RecipeDetailPage from './components/RecipeDetailPage';
 import FoodDetailPage from './components/FoodDetailPage';
 import AilmentDetailPage from './components/AilmentDetailPage';
 import ApproachDetailPage from './components/ApproachDetailPage';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
+import ContactUs from './components/ContactUs';
 
-type ViewState = 'home' | 'ailment-guide' | 'dosha-assessment' | 'treatment-center' | 'nutrition-hub' | 'consultation' | 'media-detail' | 'treatment-detail' | 'herb-detail' | 'practitioner-detail' | 'recipe-detail' | 'food-detail' | 'ailment-detail' | 'approach-detail';
+type ViewState = 'home' | 'ailment-guide' | 'dosha-assessment' | 'treatment-center' | 'nutrition-hub' | 'consultation' | 'media-detail' | 'treatment-detail' | 'herb-detail' | 'practitioner-detail' | 'recipe-detail' | 'food-detail' | 'ailment-detail' | 'approach-detail' | 'privacy-policy' | 'terms-of-service' | 'contact-us';
 
 const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('home');
@@ -106,6 +109,15 @@ const App: React.FC = () => {
       } else if (route === 'food' && id) {
         setView('food-detail');
         setSelectedItemId(id);
+        window.scrollTo(0, 0);
+      } else if (route === 'privacy-policy') {
+        setView('privacy-policy');
+        window.scrollTo(0, 0);
+      } else if (route === 'terms-of-service') {
+        setView('terms-of-service');
+        window.scrollTo(0, 0);
+      } else if (route === 'contact-us') {
+        setView('contact-us');
         window.scrollTo(0, 0);
       } else if (route === 'nutrition') {
         setView('nutrition-hub');
@@ -177,6 +189,12 @@ const App: React.FC = () => {
         return <FoodDetailPage food={(window as any).foodDetailData} />;
       case 'consultation':
         return <ConsultationPage />;
+      case 'privacy-policy':
+        return <PrivacyPolicy />;
+      case 'terms-of-service':
+        return <TermsOfService />;
+      case 'contact-us':
+        return <ContactUs />;
       case 'home':
       default:
         return (
