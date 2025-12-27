@@ -1,20 +1,52 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kurmayu Ayurveda - Ancient Wisdom, Modern Application</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-      body {
-        font-family: 'Inter', sans-serif;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kurmayu Ayurveda - Ancient Wisdom, Modern Application</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: {
+              main: '#FAFAFA',
+              primary: '#F7F7F7',
+              secondary: '#F2F2F2',
+              surface: '#FFFFFF',
+              header: '#F9FAFB',
+              highlight: '#FFFDF8',
+            },
+            border: {
+              light: '#E0E0E0',
+            },
+            text: {
+              primary: '#1C1C1C',
+              secondary: '#6B6B6B',
+              disabled: '#9E9E9E',
+            }
+          }
+        }
       }
-      h1, h2, h3, .font-serif {
-        font-family: 'Playfair Display', serif;
-      }
-    </style>
+    }
+  </script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    h1,
+    h2,
+    h3,
+    .font-serif {
+      font-family: 'Playfair Display', serif;
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -26,10 +58,12 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="bg-[#FDFCF7] text-gray-900">
-    <div id="root"></div>
+
+<body class="bg-background-main text-text-primary">
+  <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>

@@ -30,20 +30,20 @@ const SymptomChecker: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white p-2 rounded-3xl shadow-xl shadow-emerald-900/5 border border-emerald-50 relative overflow-hidden">
+      <div className="bg-background-surface p-2 rounded-3xl shadow-xl shadow-emerald-900/5 border border-emerald-50 relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
           <Sparkles size={80} />
         </div>
 
         <form onSubmit={handleSearch} className="flex flex-col md:flex-row items-stretch md:items-center gap-2">
           <div className="flex-1 relative flex items-center group">
-            <Search className="absolute left-6 text-gray-300 group-focus-within:text-emerald-500 transition-colors" size={24} />
+            <Search className="absolute left-6 text-text-disabled group-focus-within:text-emerald-500 transition-colors" size={24} />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search symptoms like 'headache', 'digestion', 'joint pain'..."
-              className="w-full pl-16 pr-8 py-6 rounded-2xl md:rounded-l-2xl md:rounded-r-none border-none bg-gray-50/50 focus:ring-0 text-lg"
+              className="w-full pl-16 pr-8 py-6 rounded-2xl md:rounded-l-2xl md:rounded-r-none border-none bg-background-secondary/50 focus:ring-0 text-lg"
             />
           </div>
           <button
@@ -57,12 +57,12 @@ const SymptomChecker: React.FC = () => {
         </form>
 
         <div className="px-6 py-4 flex items-center gap-6 overflow-x-auto no-scrollbar">
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest flex-shrink-0">Popular:</span>
+          <span className="text-xs font-bold text-text-disabled uppercase tracking-widest flex-shrink-0">Popular:</span>
           {['Headache', 'Digestive Issues', 'Joint Pain', 'Skin Problems', 'Stress'].map(tag => (
             <button
               key={tag}
               onClick={() => { setQuery(tag); }}
-              className="text-sm font-medium text-gray-500 hover:text-emerald-700 whitespace-nowrap"
+              className="text-sm font-medium text-text-secondary hover:text-emerald-700 whitespace-nowrap"
             >
               {tag}
             </button>
@@ -83,19 +83,19 @@ const SymptomChecker: React.FC = () => {
               </div>
             </div>
 
-            <p className="text-gray-700 leading-relaxed mb-8 text-lg">
+            <p className="text-text-secondary leading-relaxed mb-8 text-lg">
               {result.description}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-white p-6 rounded-2xl shadow-sm">
-                <h4 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <div className="bg-background-surface p-6 rounded-2xl shadow-sm">
+                <h4 className="font-bold text-text-primary mb-4 flex items-center gap-2">
                   <Sparkles size={16} className="text-amber-500" />
                   General Guidance
                 </h4>
                 <ul className="space-y-3">
                   {result.recommendations.map((rec, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed">
+                    <li key={i} className="flex items-start gap-3 text-sm text-text-secondary leading-relaxed">
                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0" />
                       {rec}
                     </li>

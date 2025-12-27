@@ -205,7 +205,7 @@ const App: React.FC = () => {
             <section className="py-20 px-4 md:px-8 max-w-7xl mx-auto">
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-serif mb-4">Your Health Journey Starts Here</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
+                <p className="text-text-secondary max-w-2xl mx-auto">
                   Access powerful tools to understand your body and find natural healing solutions.
                 </p>
               </div>
@@ -249,7 +249,7 @@ const App: React.FC = () => {
             {/* <TrustSection /> */}
 
             {/* Holistic Recommendations */}
-            <section className="py-24 bg-[#F5F3EF]">
+            <section className="py-24 bg-background-secondary">
               <div className="max-w-7xl mx-auto px-4 md:px-8">
                 <div className="flex flex-col lg:flex-row gap-16 items-center">
                   <div className="lg:w-1/2">
@@ -261,7 +261,7 @@ const App: React.FC = () => {
                   <div className="lg:w-1/2 space-y-12">
                     <div>
                       <h2 className="text-4xl font-serif mb-6">Experience the Healing Power of Ayurveda</h2>
-                      <p className="text-gray-600 leading-relaxed mb-8">
+                      <p className="text-text-secondary leading-relaxed mb-8">
                         Our approach combines ancient wisdom with modern precision, ensuring you receive
                         a plan that honors your body's unique intelligence.
                       </p>
@@ -288,7 +288,7 @@ const App: React.FC = () => {
                       />
                     </div>
 
-                    <div className="pt-6 border-t border-gray-200">
+                    <div className="pt-6 border-t border-border-light">
                       <button
                         onClick={navigateToBook}
                         className="bg-[#064E3B] text-white px-8 py-3 rounded-full hover:bg-emerald-800 transition-colors flex items-center gap-2"
@@ -372,18 +372,18 @@ const App: React.FC = () => {
             </section>
 
             {/* Newsletter */}
-            <section className="py-16 bg-white border-b border-gray-100">
+            <section className="py-16 bg-background-surface border-b border-border-light">
               <div className="max-w-4xl mx-auto px-4">
-                <div className="bg-[#FDFCF7] border border-emerald-100 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 shadow-sm">
+                <div className="bg-background-highlight border border-emerald-100 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 shadow-sm">
                   <div className="flex-1 text-center md:text-left">
                     <h3 className="text-2xl font-serif mb-2">Stay Connected with Wellness Updates</h3>
-                    <p className="text-gray-500">Subscribe to receive seasonal wellness tips, Ayurvedic recipes, and exclusive health insights.</p>
+                    <p className="text-text-secondary">Subscribe to receive seasonal wellness tips, Ayurvedic recipes, and exclusive health insights.</p>
                   </div>
                   <div className="w-full md:w-auto flex flex-col sm:flex-row gap-2">
                     <input
                       type="email"
                       placeholder="Enter your email address"
-                      className="px-6 py-3 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full sm:w-64"
+                      className="px-6 py-3 rounded-full border border-border-light focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full sm:w-64"
                     />
                     <button className="bg-[#064E3B] text-white px-8 py-3 rounded-full font-bold hover:bg-emerald-800 transition-colors">
                       Subscribe
@@ -413,11 +413,11 @@ const App: React.FC = () => {
 // Sub-components
 const FeatureCard: React.FC<{ icon: React.ReactNode, title: string, description: string, link: string, color: string }> = ({ icon, title, description, link, color }) => (
   <a href={link} className={`p-8 rounded-2xl transition-all hover:shadow-lg ${color} border border-transparent hover:border-white group block`}>
-    <div className="mb-6 bg-white w-12 h-12 rounded-xl flex items-center justify-center shadow-sm">
+    <div className="mb-6 bg-background-surface w-12 h-12 rounded-xl flex items-center justify-center shadow-sm">
       {icon}
     </div>
     <h3 className="text-xl font-bold mb-3">{title}</h3>
-    <p className="text-gray-600 text-sm leading-relaxed mb-6">{description}</p>
+    <p className="text-text-secondary text-sm leading-relaxed mb-6">{description}</p>
     <div className="flex items-center gap-2 text-sm font-bold group-hover:gap-3 transition-all">
       Get Started <ArrowRight size={16} />
     </div>
@@ -432,7 +432,7 @@ const RecommendationItem: React.FC<{ title: string, items: string[] }> = ({ titl
     </h4>
     <ul className="space-y-3">
       {items.map((item, idx) => (
-        <li key={idx} className="flex items-start gap-3 text-gray-600 text-sm">
+        <li key={idx} className="flex items-start gap-3 text-text-secondary text-sm">
           <CheckCircle2 size={16} className="text-emerald-500 mt-0.5 flex-shrink-0" />
           {item}
         </li>
@@ -446,12 +446,12 @@ const MediaCard: React.FC<{ source: string, title: string, date: string, image: 
     <div className="rounded-2xl overflow-hidden mb-6 aspect-video">
       <img src={image} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
     </div>
-    <div className="flex items-center gap-2 text-gray-500 text-xs mb-2">
+    <div className="flex items-center gap-2 text-text-secondary text-xs mb-2">
       <BookOpen size={14} />
       <span>{source}</span>
     </div>
     <h4 className="text-lg font-bold mb-2 group-hover:text-emerald-700 transition-colors leading-snug">{title}</h4>
-    <p className="text-gray-400 text-sm">{date}</p>
+    <p className="text-text-disabled text-sm">{date}</p>
   </div>
 );
 

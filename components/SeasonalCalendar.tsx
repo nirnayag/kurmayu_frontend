@@ -108,14 +108,14 @@ const SeasonalCalendar: React.FC = () => {
 
   if (loading || !activeSeason) {
     return (
-      <section className="py-24 bg-[#F5F3EF] flex items-center justify-center min-h-[400px]">
+      <section className="py-24 bg-background-main flex items-center justify-center min-h-[400px]">
         <div className="text-emerald-800 font-serif text-2xl animate-pulse">Loading Seasonal Wisdom...</div>
       </section>
     );
   }
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-background-surface">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -123,8 +123,8 @@ const SeasonalCalendar: React.FC = () => {
             <CalendarIcon size={16} />
             Seasonal Wisdom
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif mb-4 text-gray-900">Ayurvedic Seasonal Wellness Calendar</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-serif mb-4 text-text-primary">Ayurvedic Seasonal Wellness Calendar</h2>
+          <p className="text-text-secondary max-w-2xl mx-auto">
             Align your health practices with nature's rhythms for optimal well-being throughout the year
           </p>
         </div>
@@ -143,8 +143,8 @@ const SeasonalCalendar: React.FC = () => {
                 key={s.id}
                 onClick={() => setActiveSeason(s)}
                 className={`px-8 py-4 rounded-2xl transition-all flex items-center gap-3 font-medium border-2 ${activeSeason?.id === s.id
-                    ? `${colors.bg} ${colors.border} text-gray-900 shadow-md`
-                    : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
+                  ? `${colors.bg} ${colors.border} text-text-primary shadow-md`
+                  : 'bg-background-surface border-border-light text-text-secondary hover:border-border-light/80'
                   }`}
               >
                 {s.icon}
@@ -163,16 +163,16 @@ const SeasonalCalendar: React.FC = () => {
           <div className="lg:col-span-2">
             <div className={`${getColorClasses(activeSeason.color).bg} rounded-3xl p-8 border ${getColorClasses(activeSeason.color).border} sticky top-24`}>
               <div className="flex items-center gap-3 mb-6">
-                <div className={`p-3 bg-white rounded-xl ${getColorClasses(activeSeason.color).text}`}>
+                <div className={`p-3 bg-background-surface rounded-xl ${getColorClasses(activeSeason.color).text}`}>
                   {activeSeason.icon}
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900">{activeSeason.name}</h3>
-                  <p className="text-sm text-gray-600">Kapha Season</p>
+                  <h3 className="text-2xl font-bold text-text-primary">{activeSeason.name}</h3>
+                  <p className="text-sm text-text-secondary">Kapha Season</p>
                 </div>
               </div>
 
-              <div className={`flex items-center gap-2 text-gray-700 mb-6 pb-6 border-b ${getColorClasses(activeSeason.color).border}`}>
+              <div className={`flex items-center gap-2 text-text-secondary mb-6 pb-6 border-b ${getColorClasses(activeSeason.color).border}`}>
                 <CalendarIcon size={16} />
                 <span className="font-medium">{activeSeason.months}</span>
               </div>
@@ -192,16 +192,16 @@ const SeasonalCalendar: React.FC = () => {
           {/* Right Content - Recommendations */}
           <div className="lg:col-span-3 space-y-8">
             {/* Diet Recommendations */}
-            <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+            <div className="bg-background-surface rounded-3xl p-8 border border-border-light shadow-sm">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border-light">
                 <div className="p-2.5 bg-emerald-50 rounded-xl">
                   <Utensils className="text-emerald-600" size={20} />
                 </div>
-                <h4 className="font-bold text-gray-900 text-lg">Diet Recommendations</h4>
+                <h4 className="font-bold text-text-primary text-lg">Diet Recommendations</h4>
               </div>
               <ul className="space-y-3">
                 {activeSeason.diet.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-gray-700">
+                  <li key={idx} className="flex items-start gap-3 text-text-secondary">
                     <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
@@ -210,16 +210,16 @@ const SeasonalCalendar: React.FC = () => {
             </div>
 
             {/* Lifestyle Recommendations */}
-            <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+            <div className="bg-background-surface rounded-3xl p-8 border border-border-light shadow-sm">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border-light">
                 <div className="p-2.5 bg-blue-50 rounded-xl">
                   <Zap className="text-blue-600" size={20} />
                 </div>
-                <h4 className="font-bold text-gray-900 text-lg">Lifestyle Recommendations</h4>
+                <h4 className="font-bold text-text-primary text-lg">Lifestyle Recommendations</h4>
               </div>
               <ul className="space-y-3">
                 {activeSeason.lifestyle.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-gray-700">
+                  <li key={idx} className="flex items-start gap-3 text-text-secondary">
                     <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
                     <span>{item}</span>
                   </li>
@@ -229,16 +229,16 @@ const SeasonalCalendar: React.FC = () => {
 
             {/* Herbs Recommendations */}
             {activeSeason.herbs.length > 0 && (
-              <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm">
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
+              <div className="bg-background-surface rounded-3xl p-8 border border-border-light shadow-sm">
+                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border-light">
                   <div className="p-2.5 bg-emerald-50 rounded-xl">
                     <Sprout className="text-emerald-600" size={20} />
                   </div>
-                  <h4 className="font-bold text-gray-900 text-lg">Herbs Recommendations</h4>
+                  <h4 className="font-bold text-text-primary text-lg">Herbs Recommendations</h4>
                 </div>
                 <ul className="space-y-3">
                   {activeSeason.herbs.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-gray-700">
+                    <li key={idx} className="flex items-start gap-3 text-text-secondary">
                       <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
                       <span>{item}</span>
                     </li>
@@ -267,14 +267,14 @@ const SeasonalCalendar: React.FC = () => {
 const RecommendationGroup: React.FC<{ icon: React.ReactNode, title: string, items: string[] }> = ({ icon, title, items }) => (
   <div>
     <div className="flex items-center gap-3 mb-6">
-      <div className="p-2.5 bg-gray-50 rounded-xl">
+      <div className="p-2.5 bg-background-secondary rounded-xl">
         {icon}
       </div>
-      <h5 className="font-bold text-gray-900 uppercase tracking-wide text-sm">{title}</h5>
+      <h5 className="font-bold text-text-primary uppercase tracking-wide text-sm">{title}</h5>
     </div>
     <ul className="space-y-4">
       {items.map((item, idx) => (
-        <li key={idx} className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed">
+        <li key={idx} className="flex items-start gap-3 text-sm text-text-secondary leading-relaxed">
           <CheckCircle2 size={16} className="text-emerald-500 mt-0.5 flex-shrink-0" />
           {item}
         </li>

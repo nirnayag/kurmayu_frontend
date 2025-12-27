@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
 
   if (loading || themes.length === 0) {
     return (
-      <section className="relative min-h-screen pt-16 pb-12 bg-[#FDFCF7] flex items-center justify-center">
+      <section className="relative min-h-screen pt-16 pb-12 bg-background-primary flex items-center justify-center">
         <div className="animate-pulse flex flex-col items-center">
           <div className="h-8 w-32 bg-gray-200 rounded-full mb-4"></div>
           <div className="h-12 w-64 bg-gray-200 rounded-lg mb-4"></div>
@@ -74,11 +74,11 @@ const Hero: React.FC = () => {
               <Leaf size={16} />
               <span>{currentTheme.content.badgeText}</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-serif mb-8 leading-tight text-gray-900">
+            <h1 className="text-5xl md:text-7xl font-serif mb-8 leading-tight text-text-primary">
               {currentTheme.content.title} <br />
               <span className={`italic transition-colors duration-1000 ${currentTheme.styles.highlight}`}>{currentTheme.content.highlightedTitle}</span>
             </h1>
-            <p className="text-lg text-gray-600 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            <p className="text-lg text-text-secondary mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
               {currentTheme.content.description}
             </p>
 
@@ -86,7 +86,7 @@ const Hero: React.FC = () => {
               <button className={`w-full sm:w-auto text-white px-8 py-4 rounded-full font-bold transition-all duration-1000 flex items-center justify-center gap-2 shadow-lg hover:scale-105 ${currentTheme.styles.buttonBg} ${currentTheme.styles.buttonHover}`}>
                 {currentTheme.content.primaryButtonText} <Leaf size={18} />
               </button>
-              <button className="w-full sm:w-auto bg-white border border-gray-200 text-gray-800 px-8 py-4 rounded-full font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2">
+              <button className="w-full sm:w-auto bg-background-surface border border-border-light text-text-primary px-8 py-4 rounded-full font-bold hover:bg-background-secondary transition-all flex items-center justify-center gap-2">
                 {currentTheme.content.secondaryButtonText} <Search size={18} />
               </button>
             </div>
@@ -99,7 +99,7 @@ const Hero: React.FC = () => {
               </div>
               <div className="text-left">
                 <p className="font-bold text-sm">10,000+ Happy Patients</p>
-                <p className="text-xs text-gray-500 font-medium">Trusted by families across India</p>
+                <p className="text-xs text-text-secondary font-medium">Trusted by families across India</p>
               </div>
             </div>
           </div>
@@ -118,7 +118,7 @@ const Hero: React.FC = () => {
               <div
                 key={theme.id}
                 style={{ transition: 'all 1s ease-in-out, z-index 0s linear 0.5s' }}
-                className={`absolute top-0 left-0 w-full h-full rounded-[40px] overflow-hidden shadow-2xl border-8 border-white bg-white
+                className={`absolute top-0 left-0 w-full h-full rounded-[40px] overflow-hidden shadow-2xl border-8 border-background-surface bg-background-surface
                   ${activeImage === index ? 'z-20 scale-100 rotate-0 opacity-100' : 'z-10 scale-95 rotate-6 translate-x-8 opacity-60'}`}
               >
                 <img
@@ -130,17 +130,17 @@ const Hero: React.FC = () => {
             ))}
 
             {/* Dr. Card Overlay - Only show when doctor image is active? Or always on top? Let's keep it always on top but maybe fade it? */}
-            <div className={`absolute -bottom-10 -left-10 md:left-0 z-30 bg-white p-6 rounded-2xl shadow-xl max-w-xs border border-emerald-50 hidden sm:block transition-opacity duration-500 `}>
+            <div className={`absolute -bottom-10 -left-10 md:left-0 z-30 bg-background-surface p-6 rounded-2xl shadow-xl max-w-xs border border-emerald-50 hidden sm:block transition-opacity duration-500 `}>
               <div className="flex items-center gap-4 mb-4">
                 <div className="bg-emerald-100 p-2 rounded-lg text-emerald-700">
                   <Leaf size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900">Dr. Ravi Shinde</h4>
+                  <h4 className="font-bold text-text-primary">Dr. Ravi Shinde</h4>
                   <p className="text-xs text-emerald-600 font-medium">BAMS, MD (Ayurveda)</p>
                 </div>
               </div>
-              <p className="text-xs text-gray-500 mb-4 leading-relaxed font-medium">
+              <p className="text-xs text-text-secondary mb-4 leading-relaxed font-medium">
                 "Ayurveda is not just about treatment, but a journey back to yourself."
               </p>
               <div className="flex items-center gap-2 text-amber-400">
@@ -150,7 +150,7 @@ const Hero: React.FC = () => {
                 <Star size={14} fill="currentColor" />
                 <Star size={14} fill="currentColor" />
                 <Star size={14} fill="currentColor" />
-                <span className="text-[10px] text-gray-400 font-bold ml-1 uppercase">25+ Years Experience</span>
+                <span className="text-[10px] text-text-disabled font-bold ml-1 uppercase">25+ Years Experience</span>
               </div>
             </div>
 

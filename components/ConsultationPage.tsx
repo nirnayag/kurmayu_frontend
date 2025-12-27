@@ -117,15 +117,15 @@ const ConsultationPage: React.FC = () => {
   ];
 
   return (
-    <div className="bg-[#FDFCF7] min-h-screen">
+    <div className="bg-background-main min-h-screen">
       {/* Header Banner */}
-      <section className="pt-20 pb-12 text-center bg-white border-b border-gray-100">
+      <section className="pt-20 pb-12 text-center bg-background-surface border-b border-border-light">
         <div className="max-w-4xl mx-auto px-4">
           <div className="inline-flex items-center gap-2 text-emerald-800 font-bold text-xs uppercase tracking-widest mb-6">
             <Stethoscope size={16} /> Expert Consultation Portal
           </div>
-          <h1 className="text-4xl md:text-5xl font-serif text-gray-900 mb-6 tracking-tight">Book Your Ayurvedic Consultation</h1>
-          <p className="text-gray-500 text-lg leading-relaxed max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-serif text-text-primary mb-6 tracking-tight">Book Your Ayurvedic Consultation</h1>
+          <p className="text-text-secondary text-lg leading-relaxed max-w-2xl mx-auto">
             Connect with Dr. Ravi Shinde for personalized Ayurvedic guidance and holistic healing solutions.
           </p>
         </div>
@@ -133,7 +133,7 @@ const ConsultationPage: React.FC = () => {
 
       {/* Doctor Profile Section */}
       <section className="py-16 max-w-6xl mx-auto px-4">
-        <div className="bg-white rounded-[40px] border border-gray-100 shadow-sm overflow-hidden p-8 md:p-12">
+        <div className="bg-background-surface rounded-[40px] border border-border-light shadow-sm overflow-hidden p-8 md:p-12">
           <div className="flex flex-col lg:flex-row gap-12">
             <div className="lg:w-1/4">
               <div className="relative group">
@@ -142,29 +142,29 @@ const ConsultationPage: React.FC = () => {
                   alt="Dr. Ravi Shinde"
                   className="w-full aspect-square object-cover rounded-3xl border-4 border-emerald-50"
                 />
-                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-4 py-2 rounded-full shadow-lg border border-emerald-50 flex items-center gap-1">
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-background-surface px-4 py-2 rounded-full shadow-lg border border-emerald-50 flex items-center gap-1">
                   <Star size={16} fill="currentColor" className="text-amber-400" />
                   <span className="font-bold text-sm">4.9</span>
-                  <span className="text-gray-400 text-xs">(847 reviews)</span>
+                  <span className="text-text-disabled text-xs">(847 reviews)</span>
                 </div>
               </div>
             </div>
             <div className="lg:w-3/4 space-y-6">
               <div>
-                <h2 className="text-3xl font-bold text-gray-900">Dr. Ravi Shinde</h2>
+                <h2 className="text-3xl font-bold text-text-primary">Dr. Ravi Shinde</h2>
                 <p className="text-emerald-700 font-bold uppercase tracking-widest text-sm mt-1">BAMS, MD (Ayurveda), PhD (Panchakarma)</p>
                 <div className="flex flex-wrap gap-4 mt-4">
-                  <div className="flex items-center gap-2 text-gray-500 text-xs font-bold uppercase tracking-widest">
+                  <div className="flex items-center gap-2 text-text-secondary text-xs font-bold uppercase tracking-widest">
                     <Award size={16} className="text-emerald-600" /> 25+ Years Experience
                   </div>
-                  <div className="flex items-center gap-2 text-gray-500 text-xs font-bold uppercase tracking-widest">
+                  <div className="flex items-center gap-2 text-text-secondary text-xs font-bold uppercase tracking-widest">
                     <Users size={16} className="text-emerald-600" /> 10,000+ Patients Treated
                   </div>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <h3 className="font-bold text-gray-900 uppercase tracking-widest text-xs">Specializations</h3>
+                <h3 className="font-bold text-text-primary uppercase tracking-widest text-xs">Specializations</h3>
                 <div className="flex flex-wrap gap-2">
                   {["Panchakarma Therapy", "Chronic Disease Management", "Digestive Disorders", "Stress & Lifestyle Disorders", "Women's Health", "Metabolic Conditions"].map(s => (
                     <span key={s} className="px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-[10px] font-bold uppercase tracking-wider border border-emerald-100">{s}</span>
@@ -173,7 +173,7 @@ const ConsultationPage: React.FC = () => {
               </div>
 
               <div className="space-y-4">
-                <h3 className="font-bold text-gray-900 uppercase tracking-widest text-xs">Languages</h3>
+                <h3 className="font-bold text-text-primary uppercase tracking-widest text-xs">Languages</h3>
                 <div className="flex gap-2">
                   {["English", "Hindi", "Marathi", "Sanskrit"].map(l => (
                     <span key={l} className="px-3 py-1.5 bg-amber-50 text-amber-700 rounded-lg text-[10px] font-bold uppercase tracking-wider">{l}</span>
@@ -182,23 +182,23 @@ const ConsultationPage: React.FC = () => {
               </div>
 
               <div className="space-y-4">
-                <h3 className="font-bold text-gray-900 uppercase tracking-widest text-xs">About Dr. Shinde</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <h3 className="font-bold text-text-primary uppercase tracking-widest text-xs">About Dr. Shinde</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">
                   Dr. Ravi Shinde is a renowned Ayurvedic physician with over 25 years of clinical experience in traditional healing practices. He specializes in Panchakarma therapy and chronic disease management, combining ancient Ayurvedic wisdom with modern diagnostic approaches.
                 </p>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-text-secondary text-sm leading-relaxed">
                   Dr. Shinde has successfully treated over 10,000 patients, helping them achieve holistic wellness through personalized treatment plans. His approach focuses on identifying root causes rather than just treating symptoms, ensuring long-term health benefits.
                 </p>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-text-secondary text-sm leading-relaxed">
                   He has published numerous research papers on Ayurvedic treatments and regularly conducts workshops and seminars to educate both practitioners and patients about the benefits of traditional medicine.
                 </p>
               </div>
 
               <div className="space-y-4">
-                <h3 className="font-bold text-gray-900 uppercase tracking-widest text-xs">Certifications & Memberships</h3>
+                <h3 className="font-bold text-text-primary uppercase tracking-widest text-xs">Certifications & Memberships</h3>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-y-3">
                   {["Board Certified Ayurvedic Physician", "National Ayurveda Medical Association Member", "International Panchakarma Specialist", "Registered with Central Council of Indian Medicine"].map(c => (
-                    <li key={c} className="flex items-center gap-2 text-sm text-gray-600 font-medium">
+                    <li key={c} className="flex items-center gap-2 text-sm text-text-secondary font-medium">
                       <CheckCircle2 size={16} className="text-emerald-500" /> {c}
                     </li>
                   ))}
@@ -212,13 +212,13 @@ const ConsultationPage: React.FC = () => {
       {/* Consultation Types Grid */}
       <section className="py-16 max-w-6xl mx-auto px-4">
         <div className="mb-12">
-          <h2 className="text-3xl font-serif text-gray-900">Choose Consultation Type</h2>
-          <p className="text-gray-500 mt-2">Select the consultation format that best suits your needs</p>
+          <h2 className="text-3xl font-serif text-text-primary">Choose Consultation Type</h2>
+          <p className="text-text-secondary mt-2">Select the consultation format that best suits your needs</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {consultationTypes.map((type, i) => (
-            <div key={i} className="bg-white border border-gray-100 rounded-[32px] p-8 shadow-sm flex flex-col hover:shadow-xl transition-all relative">
+            <div key={i} className="bg-background-surface border border-border-light rounded-[32px] p-8 shadow-sm flex flex-col hover:shadow-xl transition-all relative">
               {type.popular && (
                 <div className="absolute -top-3 right-8 bg-[#064E3B] text-white px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
                   Most Popular
@@ -229,27 +229,27 @@ const ConsultationPage: React.FC = () => {
                   {type.icon}
                 </div>
                 <div className="text-right">
-                  <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest mb-1">Starting from</p>
-                  <p className="text-2xl font-serif text-gray-900">₹{type.price}</p>
+                  <p className="text-text-disabled text-[10px] font-bold uppercase tracking-widest mb-1">Starting from</p>
+                  <p className="text-2xl font-serif text-text-primary">₹{type.price}</p>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{type.title}</h3>
-              <div className="flex items-center gap-4 text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">
+              <h3 className="text-xl font-bold text-text-primary mb-2">{type.title}</h3>
+              <div className="flex items-center gap-4 text-xs font-bold text-text-disabled uppercase tracking-widest mb-6">
                 <span className="flex items-center gap-1"><Clock size={14} /> {type.duration}</span>
               </div>
 
               <div className="space-y-3 mb-8 flex-1">
-                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Includes:</p>
+                <p className="text-[10px] text-text-disabled font-bold uppercase tracking-widest">Includes:</p>
                 {type.includes.map((inc, j) => (
-                  <div key={j} className="flex items-start gap-2 text-sm text-gray-600 font-medium">
+                  <div key={j} className="flex items-start gap-2 text-sm text-text-secondary font-medium">
                     <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0 mt-0.5" />
                     {inc}
                   </div>
                 ))}
               </div>
 
-              <div className="pt-6 border-t border-gray-50 flex flex-col gap-4">
-                <div className="flex items-center gap-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+              <div className="pt-6 border-t border-border-light flex flex-col gap-4">
+                <div className="flex items-center gap-2 text-[10px] text-text-disabled font-bold uppercase tracking-widest">
                   <Calendar size={14} /> {type.availability}
                 </div>
                 <button
@@ -265,32 +265,32 @@ const ConsultationPage: React.FC = () => {
       </section>
 
       {/* Success Stories Grid */}
-      <section className="py-24 bg-white border-y border-gray-50">
+      <section className="py-24 bg-background-surface border-y border-border-light">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-serif text-gray-900">Patient Success Stories</h2>
-            <p className="text-gray-500 mt-4">Real transformations from real people</p>
+            <h2 className="text-4xl font-serif text-text-primary">Patient Success Stories</h2>
+            <p className="text-text-secondary mt-4">Real transformations from real people</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {testimonials.map((t, i) => (
-              <div key={i} className="bg-[#F9FAF9] p-8 rounded-[40px] border border-gray-100 flex flex-col">
+              <div key={i} className="bg-background-primary p-8 rounded-[40px] border border-border-light flex flex-col">
                 <div className="flex items-center gap-4 mb-8">
                   <img src={t.image} alt={t.name} className="w-16 h-16 rounded-2xl object-cover" />
                   <div>
-                    <h4 className="font-bold text-gray-900">{t.name}</h4>
-                    <p className="text-xs text-gray-500">{t.age} • {t.loc}</p>
+                    <h4 className="font-bold text-text-primary">{t.name}</h4>
+                    <p className="text-xs text-text-secondary">{t.age} • {t.loc}</p>
                     <div className="flex gap-0.5 text-amber-400 mt-1">
                       {[...Array(5)].map((_, j) => <Star key={j} size={10} fill="currentColor" />)}
                     </div>
                   </div>
                 </div>
                 <p className="text-emerald-700 font-bold text-[10px] uppercase tracking-widest mb-4">{t.condition}</p>
-                <p className="text-gray-600 text-sm leading-relaxed mb-8 flex-1 italic">
+                <p className="text-text-secondary text-sm leading-relaxed mb-8 flex-1 italic">
                   "{t.text}"
                 </p>
-                <div className="pt-6 border-t border-gray-200 flex flex-wrap justify-between items-center gap-4">
-                  <div className="flex items-center gap-4 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                <div className="pt-6 border-t border-border-light flex flex-wrap justify-between items-center gap-4">
+                  <div className="flex items-center gap-4 text-[10px] text-text-disabled font-bold uppercase tracking-widest">
                     <span className="flex items-center gap-1"><Clock size={14} /> {t.duration}</span>
                     <span className="flex items-center gap-1 text-emerald-600"><Activity size={14} /> {t.results}</span>
                   </div>
@@ -309,36 +309,36 @@ const ConsultationPage: React.FC = () => {
       </section>
 
       {/* Trust Badges */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background-surface">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="text-center space-y-4">
             <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700">
               <ShieldCheck size={32} />
             </div>
             <h4 className="font-bold">HIPAA Compliant</h4>
-            <p className="text-xs text-gray-500 font-medium leading-relaxed">Your health information is encrypted and secure</p>
+            <p className="text-xs text-text-secondary font-medium leading-relaxed">Your health information is encrypted and secure</p>
           </div>
           <div className="text-center space-y-4">
             <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto text-blue-700">
               <Monitor size={32} />
             </div>
             <h4 className="font-bold">HD Video Quality</h4>
-            <p className="text-xs text-gray-500 font-medium leading-relaxed">Crystal clear video consultations with secure platform</p>
+            <p className="text-xs text-text-secondary font-medium leading-relaxed">Crystal clear video consultations with secure platform</p>
           </div>
           <div className="text-center space-y-4">
             <div className="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mx-auto text-amber-700">
               <Clock size={32} />
             </div>
             <h4 className="font-bold">Flexible Scheduling</h4>
-            <p className="text-xs text-gray-500 font-medium leading-relaxed">Book appointments that fit your schedule</p>
+            <p className="text-xs text-text-secondary font-medium leading-relaxed">Book appointments that fit your schedule</p>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 bg-[#F9FAF9]">
+      <section className="py-24 bg-background-primary">
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-serif text-center text-gray-900 mb-16">Frequently Asked Questions</h2>
+          <h2 className="text-3xl font-serif text-center text-text-primary mb-16">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {[
               { q: "How do I prepare for my consultation?", a: "Keep your medical reports handy, prepare a list of current medications, and note down your symptoms and concerns. For video consultations, ensure you have a stable internet connection and a quiet environment." },
@@ -346,7 +346,7 @@ const ConsultationPage: React.FC = () => {
               { q: "Will I receive a prescription?", a: "Yes, Dr. Shinde will provide a detailed digital prescription including herbal medicines, dietary recommendations, and lifestyle modifications. You'll receive it via email within 24 hours of your consultation." },
               { q: "Is follow-up support available?", a: "Absolutely! You can book follow-up consultations at a discounted rate. Dr. Shinde also provides email support for minor queries between consultations." }
             ].map((faq, i) => (
-              <div key={i} className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
+              <div key={i} className="bg-background-surface border border-border-light rounded-2xl overflow-hidden shadow-sm">
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full p-6 text-left flex justify-between items-center group"
@@ -355,12 +355,12 @@ const ConsultationPage: React.FC = () => {
                     <div className="bg-emerald-50 p-2 rounded-lg text-emerald-700">
                       <Heart size={16} />
                     </div>
-                    <span className="font-bold text-gray-900 text-sm">{faq.q}</span>
+                    <span className="font-bold text-text-primary text-sm">{faq.q}</span>
                   </div>
-                  <ChevronDown size={20} className={`text-gray-400 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={20} className={`text-text-disabled transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
                 </button>
                 {openFaq === i && (
-                  <div className="px-6 pb-6 pt-0 text-sm text-gray-500 leading-relaxed pl-[60px]">
+                  <div className="px-6 pb-6 pt-0 text-sm text-text-secondary leading-relaxed pl-[60px]">
                     {faq.a}
                   </div>
                 )}
