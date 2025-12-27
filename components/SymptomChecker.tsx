@@ -30,7 +30,7 @@ const SymptomChecker: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-background-surface p-2 rounded-3xl shadow-xl shadow-emerald-900/5 border border-emerald-50 relative overflow-hidden">
+      <div className="bg-background-primary p-2 rounded-3xl shadow-xl shadow-emerald-900/5 border border-emerald-50 relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
           <Sparkles size={80} />
         </div>

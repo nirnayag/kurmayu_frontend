@@ -127,7 +127,7 @@ const NutritionHub: React.FC = () => {
       </section>
 
       {/* Seasonal Nutrition Guidance */}
-      <section className="py-24 bg-background-surface border-y border-border-light">
+      <section className="py-24 bg-background-primary border-y border-border-light">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif mb-4">Seasonal Nutrition Guidance</h2>
@@ -151,7 +151,7 @@ const NutritionHub: React.FC = () => {
       </section>
 
       {/* Ayurvedic Recipes Grid */}
-      <section className="py-24 bg-background-surface border-y border-border-light">
+      <section className="py-24 bg-background-secondary border-y border-border-light">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 text-emerald-700 text-[10px] font-bold uppercase tracking-widest mb-4">
@@ -219,7 +219,7 @@ const NutritionHub: React.FC = () => {
       </section>
 
       {/* Explore Nutritional Properties */}
-      <section className="py-24 bg-background-surface border-t border-border-light">
+      <section className="py-24 bg-background-primary border-t border-border-light">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 text-emerald-700 text-[10px] font-bold uppercase tracking-widest mb-4">

@@ -4,7 +4,7 @@ import { Leaf, Info, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 const DoshaSection: React.FC = () => {
   return (
-    <section className="py-24 bg-background-surface">
+    <section className="py-24 bg-background-primary">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-2 text-emerald-700 font-semibold mb-4 uppercase tracking-wider text-sm">
@@ -41,7 +41,7 @@ const DoshaSection: React.FC = () => {
           />
         </div>
 
-        <div className="bg-background-main border border-border-light rounded-[40px] p-8 md:p-12">
+        <div className="bg-background-surface border border-border-light rounded-[40px] p-8 md:p-12">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
             <div>
               <h3 className="text-2xl font-bold mb-2">Complete Assessment</h3>

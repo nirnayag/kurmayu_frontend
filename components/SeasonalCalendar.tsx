@@ -95,15 +95,29 @@ const SeasonalCalendar: React.FC = () => {
 
   // Helper function to get color classes based on season color
   const getColorClasses = (colorName: string) => {
-    const colorMap: Record<string, { bg: string; border: string; text: string }> = {
-      'emerald': { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-600' },
-      'amber': { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-600' },
-      'orange': { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-600' },
-      'blue': { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-600' },
-      'cyan': { bg: 'bg-cyan-50', border: 'border-cyan-200', text: 'text-cyan-600' },
-      'indigo': { bg: 'bg-indigo-50', border: 'border-indigo-200', text: 'text-indigo-600' },
+    const colorMap: Record<string, { bg: string; border: string; text: string; opposite: { bg: string; border: string; text: string } }> = {
+      'emerald': {
+        bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700',
+        opposite: { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-700' }
+      },
+      'amber': {
+        bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-700',
+        opposite: { bg: 'bg-indigo-50', border: 'border-indigo-200', text: 'text-indigo-700' }
+      },
+      'orange': {
+        bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-700',
+        opposite: { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700' }
+      },
+      'blue': {
+        bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-700',
+        opposite: { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-700' }
+      },
+      'indigo': {
+        bg: 'bg-indigo-50', border: 'border-indigo-200', text: 'text-indigo-700',
+        opposite: { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-700' }
+      },
     };
-    return colorMap[colorName] || colorMap['cyan'];
+    return colorMap[colorName] || colorMap['emerald'];
   };
 
   if (loading || !activeSeason) {
@@ -115,7 +129,7 @@ const SeasonalCalendar: React.FC = () => {
   }
 
   return (
-    <section className="py-24 bg-background-surface">
+    <section className="py-24 bg-background-primary">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -192,17 +206,17 @@ const SeasonalCalendar: React.FC = () => {
           {/* Right Content - Recommendations */}
           <div className="lg:col-span-3 space-y-8">
             {/* Diet Recommendations */}
-            <div className="bg-background-surface rounded-3xl p-8 border border-border-light shadow-sm">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border-light">
-                <div className="p-2.5 bg-emerald-50 rounded-xl">
-                  <Utensils className="text-emerald-600" size={20} />
+            <div className={`${getColorClasses(activeSeason.color).bg} rounded-3xl p-8 border ${getColorClasses(activeSeason.color).border} shadow-sm`}>
+              <div className={`flex items-center gap-3 mb-6 pb-4 border-b ${getColorClasses(activeSeason.color).border}`}>
+                <div className="p-2.5 bg-background-surface rounded-xl">
+                  <Utensils className={getColorClasses(activeSeason.color).text} size={20} />
                 </div>
-                <h4 className="font-bold text-text-primary text-lg">Diet Recommendations</h4>
+                <h4 className={`font-bold ${getColorClasses(activeSeason.color).text} text-lg`}>Diet Recommendations</h4>
               </div>
               <ul className="space-y-3">
                 {activeSeason.diet.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-text-secondary">
-                    <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 size={18} className={`${getColorClasses(activeSeason.color).text} mt-0.5 flex-shrink-0`} />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -210,17 +224,17 @@ const SeasonalCalendar: React.FC = () => {
             </div>
 
             {/* Lifestyle Recommendations */}
-            <div className="bg-background-surface rounded-3xl p-8 border border-border-light shadow-sm">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border-light">
-                <div className="p-2.5 bg-blue-50 rounded-xl">
-                  <Zap className="text-blue-600" size={20} />
+            <div className={`${getColorClasses(activeSeason.color).opposite.bg} rounded-3xl p-8 border ${getColorClasses(activeSeason.color).opposite.border} shadow-sm`}>
+              <div className={`flex items-center gap-3 mb-6 pb-4 border-b ${getColorClasses(activeSeason.color).opposite.border}`}>
+                <div className="p-2.5 bg-background-surface rounded-xl">
+                  <Zap className={getColorClasses(activeSeason.color).opposite.text} size={20} />
                 </div>
-                <h4 className="font-bold text-text-primary text-lg">Lifestyle Recommendations</h4>
+                <h4 className={`font-bold ${getColorClasses(activeSeason.color).opposite.text} text-lg`}>Lifestyle Recommendations</h4>
               </div>
               <ul className="space-y-3">
                 {activeSeason.lifestyle.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-text-secondary">
-                    <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 size={18} className={`${getColorClasses(activeSeason.color).opposite.text} mt-0.5 flex-shrink-0`} />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -229,17 +243,17 @@ const SeasonalCalendar: React.FC = () => {
 
             {/* Herbs Recommendations */}
             {activeSeason.herbs.length > 0 && (
-              <div className="bg-background-surface rounded-3xl p-8 border border-border-light shadow-sm">
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border-light">
-                  <div className="p-2.5 bg-emerald-50 rounded-xl">
-                    <Sprout className="text-emerald-600" size={20} />
+              <div className={`${getColorClasses(activeSeason.color).bg} rounded-3xl p-8 border ${getColorClasses(activeSeason.color).border} shadow-sm`}>
+                <div className={`flex items-center gap-3 mb-6 pb-4 border-b ${getColorClasses(activeSeason.color).border}`}>
+                  <div className="p-2.5 bg-background-surface rounded-xl">
+                    <Sprout className={getColorClasses(activeSeason.color).text} size={20} />
                   </div>
-                  <h4 className="font-bold text-text-primary text-lg">Herbs Recommendations</h4>
+                  <h4 className={`font-bold ${getColorClasses(activeSeason.color).text} text-lg`}>Herbs Recommendations</h4>
                 </div>
                 <ul className="space-y-3">
                   {activeSeason.herbs.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3 text-text-secondary">
-                      <CheckCircle2 size={18} className="text-emerald-500 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 size={18} className={`${getColorClasses(activeSeason.color).text} mt-0.5 flex-shrink-0`} />
                       <span>{item}</span>
                     </li>
                   ))}

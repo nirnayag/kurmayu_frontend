@@ -119,7 +119,7 @@ const ConsultationPage: React.FC = () => {
   return (
     <div className="bg-background-main min-h-screen">
       {/* Header Banner */}
-      <section className="pt-20 pb-12 text-center bg-background-surface border-b border-border-light">
+      <section className="pt-20 pb-12 text-center bg-background-main border-b border-border-light">
         <div className="max-w-4xl mx-auto px-4">
           <div className="inline-flex items-center gap-2 text-emerald-800 font-bold text-xs uppercase tracking-widest mb-6">
             <Stethoscope size={16} /> Expert Consultation Portal
@@ -265,7 +265,7 @@ const ConsultationPage: React.FC = () => {
       </section>
 
       {/* Success Stories Grid */}
-      <section className="py-24 bg-background-surface border-y border-border-light">
+      <section className="py-24 bg-background-primary border-y border-border-light">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif text-text-primary">Patient Success Stories</h2>
@@ -309,7 +309,7 @@ const ConsultationPage: React.FC = () => {
       </section>
 
       {/* Trust Badges */}
-      <section className="py-20 bg-background-surface">
+      <section className="py-20 bg-background-main">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="text-center space-y-4">
             <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700">

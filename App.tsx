@@ -372,7 +372,7 @@ const App: React.FC = () => {
             </section>
 
             {/* Newsletter */}
-            <section className="py-16 bg-background-surface border-b border-border-light">
+            <section className="py-16 bg-background-primary border-b border-border-light">
               <div className="max-w-4xl mx-auto px-4">
                 <div className="bg-background-highlight border border-emerald-100 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 shadow-sm">
                   <div className="flex-1 text-center md:text-left">
