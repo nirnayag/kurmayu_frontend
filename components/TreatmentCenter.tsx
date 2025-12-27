@@ -40,6 +40,81 @@ const TreatmentCenter: React.FC = () => {
   const [comparisonData, setComparisonData] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
 
+  const treatmentComparisonData: Record<string, any> = {
+    'abhyanga': {
+      name: 'Abhyanga',
+      cat: 'Massage Therapy',
+      dur: '60-90 min',
+      intensity: 'Gentle',
+      cost: '₹2,000-3,500',
+      benefits: ['Relaxation', 'Circulation', 'Skin health'],
+      bestFor: ['General wellness', 'Stress management', 'Skin care'],
+      prep: 'Light meal 2 hours before',
+      recovery: 'Immediate',
+      freq: '2-3 times/week'
+    },
+    'shirodhara': {
+      name: 'Shirodhara',
+      cat: 'Specialized Therapy',
+      dur: '45-60 min',
+      intensity: 'Gentle',
+      cost: '₹3,000-5,000',
+      benefits: ['Stress relief', 'Mental calm', 'Sleep quality'],
+      bestFor: ['Insomnia', 'Anxiety', 'Mental fatigue'],
+      prep: 'Empty stomach preferred',
+      recovery: 'Rest for 1-2 hours',
+      freq: '7-14 sessions'
+    },
+    'virechana': {
+      name: 'Virechana',
+      cat: 'Panchakarma',
+      dur: '5-7 days',
+      intensity: 'Moderate',
+      cost: '₹15,000-25,000',
+      benefits: ['Digestive health', 'Liver detox', 'Skin disorders'],
+      bestFor: ['Migraine', 'Digestive issues', 'Skin problems'],
+      prep: '3-5 days oleation',
+      recovery: '7-10 days',
+      freq: 'Once/twice yearly'
+    },
+    'basti': {
+      name: 'Basti',
+      cat: 'Panchakarma',
+      dur: '8-30 days',
+      intensity: 'Moderate',
+      cost: '₹20,000-45,000',
+      benefits: ['Vata balance', 'Nervous system', 'Joint health'],
+      bestFor: ['Arthritis', 'Constipation', 'Neurological issues'],
+      prep: 'Specific diet protocol',
+      recovery: '5-7 days',
+      freq: 'Once/twice yearly'
+    },
+    'kati basti': {
+      name: 'Kati Basti',
+      cat: 'Specialized Therapy',
+      dur: '30-45 min',
+      intensity: 'Gentle',
+      cost: '₹1,500-2,500',
+      benefits: ['Back pain relief', 'Spine health', 'Muscle tension'],
+      bestFor: ['Lower back pain', 'Sciatica', 'Slipped disc'],
+      prep: 'None',
+      recovery: 'Immediate',
+      freq: '5-7 sessions'
+    },
+    'udvartana': {
+      name: 'Udvartana',
+      cat: 'Massage Therapy',
+      dur: '45-60 min',
+      intensity: 'Moderate',
+      cost: '₹2,500-4,000',
+      benefits: ['Weight loss', 'Cellulite reduction', 'Skin toning'],
+      bestFor: ['Obesity', 'Lethargy', 'Kapha imbalance'],
+      prep: 'None',
+      recovery: 'Immediate',
+      freq: '2-3 times/week'
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -308,28 +383,46 @@ const TreatmentCenter: React.FC = () => {
       <section className="py-24 bg-background-primary border-y border-border-light">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-serif mb-4">Compare Treatments</h2>
-            <p className="text-text-secondary max-w-2xl mx-auto">Select up to 3 treatments to compare their features, benefits, and suitability for your needs.</p>
+            <div className="flex flex-col items-center justify-center gap-4">
+              <p className="text-text-secondary max-w-2xl">Select up to 3 treatments to compare their features, benefits, and suitability for your needs</p>
+            </div>
           </div>
-          <div className="bg-white rounded-[40px] p-8 md:p-12 border border-gray-100 shadow-sm mb-12">
-            <h3 className="font-bold text-text-primary mb-8">Select Treatments ({selectedIds.length}/3)</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {Object.keys(comparisonData).map(id => (
+          <div className="max-w-6xl mx-auto">
+            <div className="flex justify-between items-center mb-6 px-4">
+              <h3 className="text-lg font-bold text-text-primary">Select Treatments ({selectedIds.length}/3)</h3>
+              {selectedIds.length > 0 && (
+                <button 
+                  onClick={() => setSelectedIds([])}
+                  className="text-orange-500 font-bold text-sm hover:text-orange-600 transition-colors"
+                >
+                  Clear Selection
+                </button>
+              )}
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              {Object.keys(treatmentComparisonData).map(id => (
                 <div
                   key={id}
                   onClick={() => toggleSelection(id)}
-                  className={`p-6 rounded-3xl border transition-all cursor-pointer group relative ${selectedIds.includes(id)
-                    ? 'border-emerald-500 bg-emerald-50/10'
-                    : 'border-border-light hover:border-emerald-200'
+                  className={`p-6 rounded-3xl border-2 transition-all cursor-pointer group relative ${selectedIds.includes(id)
+                    ? 'border-emerald-500 bg-emerald-50/30'
+                    : 'border-border-light bg-background-surface hover:border-emerald-200'
                     }`}
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-bold text-text-primary">{comparisonData[id].name}</h4>
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedIds.includes(id) ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-border-light group-hover:border-emerald-300'}`}>
-                      {selectedIds.includes(id) && <CheckCircle2 size={12} />}
+                    <h4 className="text-xl font-bold text-text-primary">{treatmentComparisonData[id].name}</h4>
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${selectedIds.includes(id) ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-border-light group-hover:border-emerald-300'}`}>
+                      {selectedIds.includes(id) ? <CheckCircle2 size={14} /> : null}
                     </div>
                   </div>
-                  <p className="text-[10px] text-text-disabled font-bold uppercase tracking-widest mb-4">{comparisonData[id].cat}</p>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-sm text-emerald-700 font-medium">{treatmentComparisonData[id].cat}</p>
+                    <div className="flex items-center gap-1.5 text-text-secondary text-sm">
+                      <Clock size={14} className="opacity-60" />
+                      <span>{treatmentComparisonData[id].dur}</span>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -338,20 +431,41 @@ const TreatmentCenter: React.FC = () => {
             <div className="bg-background-surface rounded-[40px] border border-border-light shadow-xl overflow-hidden overflow-x-auto">
               <table className="w-full text-left min-w-[900px]">
                 <thead>
-                  <tr className="bg-background-secondary/50">
-                    <th className="p-6 text-[10px] font-bold uppercase tracking-widest text-text-disabled border-b border-border-light w-1/4">Feature</th>
+                  <tr className="bg-background-secondary/30">
+                    <th className="p-6 text-sm font-bold text-text-disabled border-b border-border-light w-1/5">Feature</th>
                     {selectedIds.map(id => (
                       <th key={id} className="p-6 border-b border-border-light w-1/4">
-                        <span className="text-lg font-bold text-text-primary">{comparisonData[id].name}</span>
+                        <span className="text-lg font-bold text-text-primary">{treatmentComparisonData[id].name}</span>
                       </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody className="text-sm">
-                  <ComparisonRow label="Category" values={selectedIds.map(id => comparisonData[id].cat)} />
-                  <ComparisonRow label="Duration" values={selectedIds.map(id => comparisonData[id].dur)} />
-                  <ComparisonRow label="Intensity" values={selectedIds.map(id => <span className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase ${comparisonData[id].intensity === 'Gentle' ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'}`}>{comparisonData[id].intensity}</span>)} />
-                  <ComparisonRow label="Cost Range" values={selectedIds.map(id => <span className="font-bold text-text-secondary">{comparisonData[id].cost}</span>)} />
+                  <ComparisonRow label="Category" values={selectedIds.map(id => treatmentComparisonData[id].cat)} />
+                  <ComparisonRow label="Duration" values={selectedIds.map(id => treatmentComparisonData[id].dur)} />
+                  <ComparisonRow 
+                    label="Intensity" 
+                    values={selectedIds.map(id => (
+                      <span className={`px-3 py-1 rounded-full text-[11px] font-bold ${treatmentComparisonData[id].intensity === 'Gentle' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
+                        {treatmentComparisonData[id].intensity}
+                      </span>
+                    ))} 
+                  />
+                  <ComparisonRow label="Cost Range" values={selectedIds.map(id => <span className="text-text-secondary">{treatmentComparisonData[id].cost}</span>)} />
+                  <ComparisonRow 
+                    label="Key Benefits" 
+                    values={selectedIds.map(id => (
+                      <div className="flex flex-wrap gap-2">
+                        {treatmentComparisonData[id].benefits.map((b: string) => (
+                          <span key={b} className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-[11px] font-medium border border-emerald-100">
+                            {b}
+                          </span>
+                        ))}
+                      </div>
+                    ))} 
+                  />
+                  <ComparisonRow label="Preparation" values={selectedIds.map(id => treatmentComparisonData[id].prep)} />
+                  <ComparisonRow label="Recovery Time" values={selectedIds.map(id => treatmentComparisonData[id].recovery)} />
                 </tbody>
               </table>
             </div>
@@ -395,10 +509,10 @@ const TreatmentCenter: React.FC = () => {
 };
 
 const ComparisonRow: React.FC<{ label: string, values: React.ReactNode[] }> = ({ label, values }) => (
-  <tr className="border-b border-border-light last:border-0 hover:bg-background-secondary/20 transition-colors">
-    <td className="p-6 font-bold text-text-disabled uppercase tracking-widest text-[10px] w-1/4 bg-background-secondary/30">{label}</td>
+  <tr className="border-b border-border-light last:border-0 hover:bg-background-secondary/10 transition-colors even:bg-background-secondary/5">
+    <td className="p-6 font-bold text-text-disabled text-sm w-1/5">{label}</td>
     {values.map((v, i) => (
-      <td key={i} className="p-6 text-text-secondary text-[11px] leading-relaxed w-1/4">
+      <td key={i} className="p-6 text-text-primary text-sm leading-relaxed w-1/4">
         {v}
       </td>
     ))}
