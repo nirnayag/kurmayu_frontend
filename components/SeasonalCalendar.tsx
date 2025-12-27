@@ -129,7 +129,7 @@ const SeasonalCalendar: React.FC = () => {
   }
 
   return (
-    <section className="py-24 bg-background-primary">
+    <section className={`py-24 ${getColorClasses(activeSeason.color).opposite.bg}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -224,17 +224,17 @@ const SeasonalCalendar: React.FC = () => {
             </div>
 
             {/* Lifestyle Recommendations */}
-            <div className={`${getColorClasses(activeSeason.color).opposite.bg} rounded-3xl p-8 border ${getColorClasses(activeSeason.color).opposite.border} shadow-sm`}>
-              <div className={`flex items-center gap-3 mb-6 pb-4 border-b ${getColorClasses(activeSeason.color).opposite.border}`}>
+            <div className={`${getColorClasses(activeSeason.color).bg} rounded-3xl p-8 border ${getColorClasses(activeSeason.color).border} shadow-sm`}>
+              <div className={`flex items-center gap-3 mb-6 pb-4 border-b ${getColorClasses(activeSeason.color).border}`}>
                 <div className="p-2.5 bg-background-surface rounded-xl">
-                  <Zap className={getColorClasses(activeSeason.color).opposite.text} size={20} />
+                  <Zap className={getColorClasses(activeSeason.color).text} size={20} />
                 </div>
-                <h4 className={`font-bold ${getColorClasses(activeSeason.color).opposite.text} text-lg`}>Lifestyle Recommendations</h4>
+                <h4 className={`font-bold ${getColorClasses(activeSeason.color).text} text-lg`}>Lifestyle Recommendations</h4>
               </div>
               <ul className="space-y-3">
                 {activeSeason.lifestyle.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-text-secondary">
-                    <CheckCircle2 size={18} className={`${getColorClasses(activeSeason.color).opposite.text} mt-0.5 flex-shrink-0`} />
+                    <CheckCircle2 size={18} className={`${getColorClasses(activeSeason.color).text} mt-0.5 flex-shrink-0`} />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -262,12 +262,12 @@ const SeasonalCalendar: React.FC = () => {
             )}
 
             {/* Personalized Plan CTA */}
-            <div className="bg-emerald-50 rounded-3xl p-8 border border-emerald-100">
-              <h5 className="font-bold text-emerald-900 mb-3 text-lg">Need a Personalized Plan?</h5>
-              <p className="text-sm text-emerald-800/80 mb-6 leading-relaxed">
+            <div className={`${getColorClasses(activeSeason.color).bg} rounded-3xl p-8 border ${getColorClasses(activeSeason.color).border}`}>
+              <h5 className={`font-bold ${getColorClasses(activeSeason.color).text} mb-3 text-lg`}>Need a Personalized Plan?</h5>
+              <p className={`text-sm ${getColorClasses(activeSeason.color).text} opacity-80 mb-6 leading-relaxed`}>
                 Your unique Prakriti (Constitution) determines exactly how you should navigate the seasons.
               </p>
-              <button className="flex items-center gap-2 text-emerald-900 font-bold hover:gap-3 transition-all">
+              <button className={`flex items-center gap-2 ${getColorClasses(activeSeason.color).text} font-bold hover:gap-3 transition-all`}>
                 Consult Dr. Ravi Shinde <ArrowRight size={18} />
               </button>
             </div>

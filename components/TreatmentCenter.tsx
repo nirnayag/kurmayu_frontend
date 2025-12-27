@@ -177,7 +177,7 @@ const TreatmentCenter: React.FC = () => {
           </div>
 
           <div className="bg-emerald-50/50 rounded-[40px] p-8 md:p-12 mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {allTreatments
                 .filter(t => {
                   if (activeCategory === 'Panchakarma') return t.cat === 'Detoxification' || t.cat === 'Panchakarma';
