@@ -10,7 +10,8 @@ import {
     FeaturedFood,
     Comparison,
     SymptomCheckResponse,
-    MediaRecognition
+    MediaRecognition,
+    HeroTheme
 } from '../models';
 
 const API_BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:5000/api';
@@ -79,4 +80,7 @@ export const apiService = {
 
     // Media Recognitions
     getMediaRecognitions: () => fetch(`${API_BASE_URL}/media-recognitions`).then(res => handleListResponse(res, MediaRecognition.fromJson)),
+
+    // Hero Themes
+    getHeroThemes: (active: boolean = true) => fetch(`${API_BASE_URL}/hero-themes?active=${active}`).then(res => handleListResponse(res, HeroTheme.fromJson)),
 };

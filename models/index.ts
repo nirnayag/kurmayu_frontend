@@ -11,3 +11,4 @@ export * from './FeaturedFood';
 export * from './Comparison';
 export * from './SymptomCheckResponse';
 export * from './MediaRecognition';
+export * from './HeroTheme';
