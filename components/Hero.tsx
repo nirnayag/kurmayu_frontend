@@ -13,30 +13,57 @@ const Hero: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const themes = [
+    {
+      name: 'Summer Balance',
+      bg: 'bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100', // Stronger warm gradient
+      badgeBg: 'bg-gradient-to-r from-orange-200 to-amber-200',
+      badgeText: 'text-orange-900',
+      highlight: 'bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent',
+      buttonBg: 'bg-gradient-to-r from-orange-600 to-amber-600',
+      buttonHover: 'hover:shadow-orange-900/20',
+      leafColor: 'text-orange-300',
+      image: 'https://thumbs.dreamstime.com/b/happy-young-indian-doctor-holding-hand-female-patient-giving-support-motivating-recovery-rehabilitation-telling-good-399999435.jpg'
+    },
+    {
+      name: 'Monsoon Care',
+      bg: 'bg-gradient-to-br from-emerald-100 via-teal-50 to-cyan-100', // Stronger cool gradient
+      badgeBg: 'bg-gradient-to-r from-emerald-200 to-teal-200',
+      badgeText: 'text-emerald-900',
+      highlight: 'bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent',
+      buttonBg: 'bg-gradient-to-r from-emerald-600 to-teal-600',
+      buttonHover: 'hover:shadow-emerald-900/20',
+      leafColor: 'text-emerald-300',
+      image: 'https://www.keckmedicine.org/wp-content/uploads/2021/11/Medical-doctors-and-nurse-practitioners-discuss-paperwork-in-a-hallway.jpg.webp'
+    }
+  ];
+
+  const currentTheme = themes[activeImage];
+
   return (
-    <section className="relative min-h-screen pt-16 pb-12 bg-[#FDFCF7] overflow-hidden">
+    <section className={`relative min-h-screen pt-16 pb-12 overflow-hidden transition-colors duration-1000 ease-in-out ${currentTheme.bg}`}>
       {/* Decorative leaf backgrounds */}
-      <div className="absolute top-20 -right-20 text-emerald-50/50 rotate-12 hidden lg:block">
+      <div className={`absolute top-20 -right-20 rotate-12 hidden lg:block transition-colors duration-1000 ${currentTheme.leafColor}`}>
         <Leaf size={700} strokeWidth={0.2} />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2 relative z-10 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-800 px-4 py-2 rounded-full text-sm font-semibold mb-8">
+            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-8 transition-colors duration-1000 ${currentTheme.badgeBg} ${currentTheme.badgeText}`}>
               <Leaf size={16} />
-              <span>Spring Renewal</span>
+              <span>{currentTheme.name}</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-serif mb-8 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-serif mb-8 leading-tight text-gray-900">
               Ancient Wisdom, <br />
-              <span className="text-emerald-700 italic">Moern Application</span>
+              <span className={`italic transition-colors duration-1000 ${currentTheme.highlight}`}>Modern Application</span>
             </h1>
             <p className="text-lg text-gray-600 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
               Detoxify naturally with Panchakarma and seasonal cleansing. Experience holistic wellness that balances your unique constitution.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <button className="w-full sm:w-auto bg-[#064E3B] text-white px-8 py-4 rounded-full font-bold hover:bg-emerald-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/10">
+              <button className={`w-full sm:w-auto text-white px-8 py-4 rounded-full font-bold transition-all duration-1000 flex items-center justify-center gap-2 shadow-lg hover:scale-105 ${currentTheme.buttonBg} ${currentTheme.buttonHover}`}>
                 Discover Your Dosha <Leaf size={18} />
               </button>
               <button className="w-full sm:w-auto bg-white border border-gray-200 text-gray-800 px-8 py-4 rounded-full font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2">
@@ -61,34 +88,34 @@ const Hero: React.FC = () => {
             {/* Spacer to maintain height */}
             <div className="relative z-0 opacity-0 pointer-events-none">
               <img
-                src=" https://thumbs.dreamstime.com/b/happy-young-indian-doctor-holding-hand-female-patient-giving-support-motivating-recovery-rehabilitation-telling-good-399999435.jpg"
+                src={themes[0].image}
                 alt="Spacer"
                 className="w-full max-h-[70vh] object-cover"
               />
             </div>
 
-            {/* Image 1: Doctor */}
+            {/* Image 1: Summer Balance */}
             <div
               style={{ transition: 'all 1s ease-in-out, z-index 0s linear 0.5s' }}
               className={`absolute top-0 left-0 w-full h-full rounded-[40px] overflow-hidden shadow-2xl border-8 border-white bg-white
                 ${activeImage === 0 ? 'z-20 scale-100 rotate-0 opacity-100' : 'z-10 scale-95 rotate-6 translate-x-8 opacity-60'}`}
             >
               <img
-                src=" https://thumbs.dreamstime.com/b/happy-young-indian-doctor-holding-hand-female-patient-giving-support-motivating-recovery-rehabilitation-telling-good-399999435.jpg"
-                alt="Ayurvedic Treatment"
+                src={themes[0].image}
+                alt="Summer Balance"
                 className="w-full h-full object-cover"
               />
             </div>
 
-            {/* Image 2: Medical Team */}
+            {/* Image 2: Monsoon Care */}
             <div
               style={{ transition: 'all 1s ease-in-out, z-index 0s linear 0.5s' }}
               className={`absolute top-0 left-0 w-full h-full rounded-[40px] overflow-hidden shadow-2xl border-8 border-white bg-white
                 ${activeImage === 1 ? 'z-20 scale-100 rotate-0 opacity-100' : 'z-10 scale-95 rotate-6 translate-x-8 opacity-60'}`}
             >
               <img
-                src="https://www.keckmedicine.org/wp-content/uploads/2021/11/Medical-doctors-and-nurse-practitioners-discuss-paperwork-in-a-hallway.jpg.webp"
-                alt="Medical Team"
+                src={themes[1].image}
+                alt="Monsoon Care"
                 className="w-full h-full object-cover"
               />
             </div>
