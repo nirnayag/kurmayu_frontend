@@ -27,7 +27,7 @@ const Hero: React.FC = () => {
 
   useEffect(() => {
     if (themes.length === 0) return;
-    
+
     const interval = setInterval(() => {
       setActiveImage((prev) => (prev + 1) % themes.length);
     }, 4000);
@@ -48,8 +48,20 @@ const Hero: React.FC = () => {
 
   const currentTheme = themes[activeImage];
 
+  // Temporary override for stronger gradients until API is updated
+  const themeOverrides: Record<string, { bg: string }> = {
+    'Summer Balance': {
+      bg: 'bg-gradient-to-br from-orange-200 via-amber-100 to-yellow-200'
+    },
+    'Monsoon Care': {
+      bg: 'bg-gradient-to-br from-emerald-200 via-teal-100 to-cyan-200'
+    }
+  };
+
+  const activeBg = themeOverrides[currentTheme.name]?.bg || currentTheme.styles.bg;
+
   return (
-    <section className={`relative min-h-screen pt-16 pb-12 overflow-hidden transition-colors duration-1000 ease-in-out ${currentTheme.styles.bg}`}>
+    <section className={`relative min-h-screen pt-16 pb-12 overflow-hidden transition-colors duration-1000 ease-in-out ${activeBg}`}>
       {/* Decorative leaf backgrounds */}
       <div className={`absolute top-20 -right-20 rotate-12 hidden lg:block transition-colors duration-1000 ${currentTheme.styles.leafColor}`}>
         <Leaf size={700} strokeWidth={0.2} />
@@ -95,21 +107,21 @@ const Hero: React.FC = () => {
           <div className="lg:w-1/2 relative">
             {/* Spacer to maintain height */}
             <div className="relative z-0 opacity-0 pointer-events-none">
-              <img 
+              <img
                 src={themes[0].media.imageUrl}
-                alt="Spacer" 
+                alt="Spacer"
                 className="w-full max-h-[70vh] object-cover"
               />
             </div>
 
             {themes.map((theme, index) => (
-              <div 
+              <div
                 key={theme.id}
                 style={{ transition: 'all 1s ease-in-out, z-index 0s linear 0.5s' }}
                 className={`absolute top-0 left-0 w-full h-full rounded-[40px] overflow-hidden shadow-2xl border-8 border-white bg-white
                   ${activeImage === index ? 'z-20 scale-100 rotate-0 opacity-100' : 'z-10 scale-95 rotate-6 translate-x-8 opacity-60'}`}
               >
-                <img 
+                <img
                   src={theme.media.imageUrl}
                   alt={theme.media.imageAlt}
                   className="w-full h-full object-cover"
